@@ -34,6 +34,7 @@ namespace Application.Questionnaires
                 {
                     Id = request.Id,
                     Title = request.Title,
+                    Description = request.Description,
                     Target = request.Target,
                     // Creator = request.Creator,
                     Started = request.Date ?? DateTime.Now,
