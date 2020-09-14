@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -11,6 +12,8 @@ namespace Domain
         public User Creator { get; set; } 
         public DateTime Started { get; set; }  
         public DateTime LastEdited { get; set; }  
-        public DateTime Answered { get; set; }  
+        public DateTime Answered { get; set; }
+        public ICollection<Question> Questions { get; set; }    
+
     }
 }

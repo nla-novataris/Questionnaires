@@ -1,12 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain;
 using MediatR;
 using Persistence;
 
-namespace Application.Questionnaires
+namespace Application.Questions
 {
     public class Edit
     {
@@ -15,10 +14,8 @@ namespace Application.Questionnaires
             public Guid Id { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
-            public int? Target { get; set; }
-            public User Creator { get; set; }
-            public DateTime? Date { get; set; }
-            public ICollection<Question> Questions { get; set; }
+            public string Category { get; set; }
+            public Questionnaire Questionnaire { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -32,18 +29,17 @@ namespace Application.Questionnaires
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
 
-                var questionnaire = await _context.Questionnaires.FindAsync(request.Id);
+                var question = await _context.Questions.FindAsync(request.Id);
 
-                if (questionnaire == null)
+                if (question == null)
                 {
-                    throw new Exception("Could not find activity");
+                    throw new Exception("Could not find question");
                 }
 
-                questionnaire.Title = request.Title ?? questionnaire.Title; 
-                questionnaire.Description = request.Description ?? questionnaire.Description; 
-                questionnaire.Target = request.Target ?? questionnaire.Target; 
-                //questionnaire.Creator = request.Creator ?? questionnaire.Creator;  
-                questionnaire.LastEdited = request.Date ?? DateTime.Now;      
+                question.Title = request.Title ?? question.Title;
+                question.Description = request.Description ?? question.Description;
+                question.Category = request.Category ?? question.Category;
+                question.Questionnaire = request.Questionnaire ?? question.Questionnaire;
 
                 var success = await _context.SaveChangesAsync() > 0;
 

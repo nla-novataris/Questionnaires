@@ -25,6 +25,11 @@ namespace Application.Users
             {
                 var user = await _context.Users.FindAsync(request.Id);
 
+                if (user == null)
+                {
+                    throw new Exception("Could not find user");
+                }
+
                 return user;
             }
         }

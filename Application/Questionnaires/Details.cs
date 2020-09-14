@@ -22,12 +22,16 @@ namespace Application.Questionnaires
 
             {
                 this._context = context;
-
             }
 
             public async Task<Questionnaire> Handle(Query request, CancellationToken cancellationToken)
             {
                 var questionnaire = await _context.Questionnaires.FindAsync(request.Id);
+
+                if (questionnaire == null)
+                {
+                    throw new Exception("Could not find questionnaire");
+                }
 
                 return questionnaire;
             }
