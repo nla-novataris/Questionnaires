@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
@@ -66,10 +67,8 @@ namespace Persistence.Migrations
                     UserName = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    Category = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    City = table.Column<string>(nullable: true),
-                    Venue = table.Column<string>(nullable: true)
+                    IsAdmin = table.Column<bool>(nullable: true),
+                    Added = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,7 +80,7 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -114,19 +113,19 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Values",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Value 101" });
+                table: "Users",
+                columns: new[] { "Id", "Added", "FirstName", "IsAdmin", "LastName", "UserName" },
+                values: new object[] { "1", new DateTime(2020, 9, 13, 20, 2, 50, 619, DateTimeKind.Local).AddTicks(2127), "Test", true, "User", "TestUser" });
 
             migrationBuilder.InsertData(
                 table: "Values",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 2, "Value 102" });
-
-            migrationBuilder.InsertData(
-                table: "Values",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 3, "Value 103" });
+                values: new object[,]
+                {
+                    { 1, "Value 101" },
+                    { 2, "Value 102" },
+                    { 3, "Value 103" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questionnaires_CreatorId",
