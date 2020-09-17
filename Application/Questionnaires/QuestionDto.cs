@@ -1,15 +1,16 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace Domain
+namespace Application.Questionnaires
 {
-    public class Question
+    public class QuestionDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
-        public Questionnaire Questionnaire { get; set; }
-        public ICollection<Answer> Answers { get; set; } = new List<Answer>();
+        public ICollection<AnswerDto> Answers { get; set; } = new List<AnswerDto>();
+
     }
 }

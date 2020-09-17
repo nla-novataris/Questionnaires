@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200914105423_QuestionnairesQuestionChanged2")]
+    partial class QuestionnairesQuestionChanged2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,15 +54,25 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("Category")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("City")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid?>("QuestionId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("Title")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Venue")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
 
                     b.ToTable("Answers");
                 });
@@ -122,18 +134,6 @@ namespace Persistence.Migrations
                     b.HasIndex("CreatorId");
 
                     b.ToTable("Questionnaires");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("cf631fe8-2c15-486d-a68b-39d98bccf20a"),
-                            Answered = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Test ",
-                            LastEdited = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Started = new DateTime(2020, 9, 17, 15, 2, 51, 57, DateTimeKind.Local).AddTicks(6757),
-                            Target = 12,
-                            Title = "Test Questionnaire"
-                        });
                 });
 
             modelBuilder.Entity("Domain.User", b =>
@@ -164,7 +164,7 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = "1",
-                            Added = new DateTime(2020, 9, 17, 15, 2, 51, 55, DateTimeKind.Local).AddTicks(3664),
+                            Added = new DateTime(2020, 9, 14, 12, 54, 22, 795, DateTimeKind.Local).AddTicks(384),
                             FirstName = "Test",
                             IsAdmin = true,
                             LastName = "User",
@@ -201,13 +201,6 @@ namespace Persistence.Migrations
                             Id = 3,
                             Name = "Value 103"
                         });
-                });
-
-            modelBuilder.Entity("Domain.Answer", b =>
-                {
-                    b.HasOne("Domain.Question", null)
-                        .WithMany("Answers")
-                        .HasForeignKey("QuestionId");
                 });
 
             modelBuilder.Entity("Domain.Question", b =>

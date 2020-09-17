@@ -20,12 +20,12 @@ namespace API.Controllers
 
         // GET api/activities
         [HttpGet]
-        public async Task<ActionResult<List<Questionnaire>>> List()
+        public async Task<ActionResult<List<QuestionnaireDto>>> List()
         {
             return await _mediator.Send(new List.Query());
    }
         [HttpGet("{id}")]
-        public async Task<ActionResult<Questionnaire>> Details(Guid id)
+        public async Task<ActionResult<QuestionnaireDto>> Details(Guid id)
         {
             return await _mediator.Send(new Details.Query { Id = id });
         }
@@ -33,7 +33,6 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Unit>> Create(Create.Command command)
         {
-          Console.WriteLine("her");
             return await _mediator.Send(command);
         }
 

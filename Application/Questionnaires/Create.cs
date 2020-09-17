@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain;
@@ -17,6 +18,8 @@ namespace Application.Questionnaires
             public int Target { get; set; }
             public User Creator { get; set; }
             public DateTime? Date { get; set; }
+            public ICollection<Question> Questions { get; set; }
+
         }
 
         public class Handler : IRequestHandler<Command>
@@ -29,6 +32,20 @@ namespace Application.Questionnaires
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
+                List<Question> qs = new List<Question>();
+                foreach (var item in request.Questions)
+                {
+                    Console.WriteLine("item "+ item);
+                    var question = new Question
+                    {
+                        Id = item.Id,
+                        Title = item.Title,
+                        Description = item.Description
+                    };
+                    qs.Add(question);
+                }
+
+                Console.WriteLine("quest " + qs);
 
                 var questionnaire = new Questionnaire
                 {
@@ -36,8 +53,9 @@ namespace Application.Questionnaires
                     Title = request.Title,
                     Description = request.Description,
                     Target = request.Target,
-                    // Creator = request.Creator,
+                    //Creator = request.Creator,
                     Started = request.Date ?? DateTime.Now,
+                    Questions = qs
                 };
 
                 _context.Questionnaires.Add(questionnaire);

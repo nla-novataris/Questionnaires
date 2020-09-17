@@ -12,7 +12,7 @@ namespace Application.Questions
         public class Query : IRequest<Question>
         {
             public Guid Id { get; set; }
-
+                
         }
 
         public class Handler : IRequestHandler<Query, Question>

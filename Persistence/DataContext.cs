@@ -27,10 +27,40 @@ namespace Persistence
                 new Value { Id = 3, Name = "Value 103"}
             );
 
+            //builder.Entity<User>()
+            //.HasData(
+            //    new User { Id = "1", UserName = "TestUser", FirstName = "Test", 
+            //        LastName = "User", IsAdmin= true, Added= DateTime.Now}
+            //);
+
             builder.Entity<User>()
             .HasData(
-                new User { Id = "1", UserName = "TestUser", FirstName = "Test", LastName = "User", IsAdmin= true, Added= DateTime.Now}
+                new User
+                {
+                    Id = "1",
+                    UserName = "TestUser",
+                    FirstName = "Test",
+                    LastName = "User",
+                    IsAdmin = true,
+                    Added = DateTime.Now
+                }
             );
+
+
+
+
+            builder.Entity<Questionnaire>()
+            .HasData(
+                new Questionnaire
+                {
+                    Id = Guid.NewGuid(),
+                    Title = "Test Questionnaire",
+                    Description = "Test ",
+                    Target = 12,
+                    Started = DateTime.Now
+                }
+            );
+
 
             /*
             builder.Entity<UserAnswer>(x => x.HasKey(ua => 
