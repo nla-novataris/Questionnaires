@@ -1,23 +1,19 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain;
 using MediatR;
 using Persistence;
 
-namespace Application.Questions
+namespace Application.Answers
 {
-    public class Create
+    public class Edit
     {
         public class Command : IRequest
         {
             public Guid Id { get; set; }
-            public string Title { get; set; }
             public string Description { get; set; }
-            public string Category { get; set; }
-            public Questionnaire Questionnaire { get; set; }
-            public List<Answer> Answers { get; set; } = new List<Answer>();
+            public Question Question { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -25,22 +21,20 @@ namespace Application.Questions
             private readonly DataContext _context;
             public Handler(DataContext context)
             {
-                this._context = context;
+                _context = context;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var question = new Question
-                {
-                    Id = request.Id,
-                    Title = request.Title,
-                    Description = request.Description,
-                    Category = request.Category,
-                    Questionnaire = request.Questionnaire,
-                    Answers = request.Answers
-                };
+                var answer = await _context.Answers.FindAsync(request.Id);
 
-                _context.Questions.Add(question);
+                if (answer == null)
+                {
+                    throw new Exception("Could not find answer");
+                }
+
+                answer.Description = request.Description ?? answer.Description;
+                answer.Question = request.Question ?? answer.Question;
 
                 var success = await _context.SaveChangesAsync() > 0;
 

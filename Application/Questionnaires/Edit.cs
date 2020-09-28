@@ -24,9 +24,12 @@ namespace Application.Questionnaires
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IMediator _mediator;
+
+            public Handler(DataContext context, IMediator mediator)
             {
                 _context = context;
+                _mediator = mediator;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -36,20 +39,54 @@ namespace Application.Questionnaires
 
                 if (questionnaire == null)
                 {
-                    throw new Exception("Could not find activity");
+                    throw new Exception("Could not find Qs");
                 }
 
-                questionnaire.Title = request.Title ?? questionnaire.Title; 
-                questionnaire.Description = request.Description ?? questionnaire.Description; 
-                questionnaire.Target = request.Target ?? questionnaire.Target; 
-                questionnaire.Creator = request.Creator ?? questionnaire.Creator;  
+                questionnaire.Title = request.Title ?? questionnaire.Title;
+                questionnaire.Description = request.Description ?? questionnaire.Description;
+                questionnaire.Target = request.Target ?? questionnaire.Target;
+                questionnaire.Creator = request.Creator ?? questionnaire.Creator;
                 questionnaire.LastEdited = request.Date ?? DateTime.Now;
+                //questionnaire.Questions = request.Questions ?? questionnaire.Questions;
 
-                //foreach (var q in request.Questions)
-                //{
-                //    q
-                //}
-                //questionnaire.Questions = 
+                if (request.Questions != null)
+                {
+                    foreach (var reqQuest in request.Questions)
+                    {
+                        foreach (var domainQuest in questionnaire.Questions)
+                        {
+                            if (reqQuest.Id == domainQuest.Id)
+                            {
+
+                                Console.WriteLine(reqQuest.Id);
+                                Console.WriteLine(domainQuest.Id);
+
+                                Questions.Edit.Command qCommand = new Questions.Edit.Command();
+                                qCommand.Title = reqQuest.Title;
+                                qCommand.Description = reqQuest.Description;
+                                qCommand.Category = reqQuest.Category;
+                                qCommand.Questionnaire = questionnaire;
+                                qCommand.Answers = (List<Answer>)reqQuest.Answers;
+
+                                return await _mediator.Send(qCommand);
+                            }
+
+                            else
+                            {
+
+                                Questions.Create.Command qCommand = new Questions.Create.Command();
+                                qCommand.Id = reqQuest.Id;
+                                qCommand.Title = reqQuest.Title;
+                                qCommand.Description = reqQuest.Description;
+                                qCommand.Category = reqQuest.Category;
+                                qCommand.Questionnaire = questionnaire;
+                                qCommand.Answers = (List<Answer>)reqQuest.Answers;
+
+                                return await _mediator.Send(qCommand);
+                            }
+                        }
+                    }
+                }
 
                 var success = await _context.SaveChangesAsync() > 0;
 
