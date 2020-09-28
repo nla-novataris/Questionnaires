@@ -18,11 +18,11 @@ namespace API.Controllers
 
         // GET /
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Value>>> Get()
+        public ActionResult<IEnumerable<Value>> Get()
         {
             // var values = await _context.Values.ToListAsync();
             var hello = "hello 1";
-             return Ok(hello);
+            return Ok(hello);
         }
     }
 }

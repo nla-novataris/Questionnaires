@@ -20,6 +20,7 @@ namespace Application.Questions
             public List<Answer> Answers { get; set; } = new List<Answer>();
         }
 
+
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;

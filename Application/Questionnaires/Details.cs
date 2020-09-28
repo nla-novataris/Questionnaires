@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Domain;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Application.Dtos;
 
 namespace Application.Questionnaires
 {
@@ -35,8 +35,6 @@ namespace Application.Questionnaires
                     .FindAsync(request.Id);
 
                 var questionnaireToReturn = _mapper.Map<Questionnaire, QuestionnaireDto>(questionnaire);
-
-                var domainAnswers = new List<Answer>();
 
                 //foreach (var question in questionnaire.Questions)
                 //{

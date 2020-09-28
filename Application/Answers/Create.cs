@@ -26,7 +26,8 @@ namespace Application.Answers
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                Console.WriteLine("lol");
+                Console.WriteLine("er i create");
+
                 var answer = new Answer
                 {
                     Id = request.Id,

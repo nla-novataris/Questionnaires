@@ -4,27 +4,32 @@ using System.Threading.Tasks;
 using Domain;
 using MediatR;
 using Persistence;
+using Application.Dtos;
+using AutoMapper;
 
 namespace Application.Questions
 {
     public class Details
     {
-        public class Query : IRequest<Question>
+        public class Query : IRequest<QuestionDto>
         {
             public Guid Id { get; set; }
                 
         }
 
-        public class Handler : IRequestHandler<Query, Question>
+        public class Handler : IRequestHandler<Query, QuestionDto>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IMapper _mapper;
+
+            public Handler(DataContext context, IMapper mapper)
 
             {
-                this._context = context;
+                _context = context;
+                _mapper = mapper;
             }
 
-            public async Task<Question> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<QuestionDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 var question = await _context.Questions.FindAsync(request.Id);
 
@@ -33,7 +38,9 @@ namespace Application.Questions
                     throw new Exception("Could not find question");
                 }
 
-                return question;
+                var questionToReturn = _mapper.Map<Question, QuestionDto>(question);
+
+                return questionToReturn;
             }
         }
     }

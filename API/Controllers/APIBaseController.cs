@@ -18,7 +18,7 @@ namespace API.Controllers
 
         // GET /
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Value>>> Get()
+        public ActionResult<IEnumerable<Value>> Get()
         {
             // var values = await _context.Values.ToListAsync();
             var hello = "hello 2";
@@ -27,7 +27,7 @@ namespace API.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task< ActionResult<Value>> Get(int id)
+        public ActionResult<Value> Get(int id)
         {
             //var value = await _context.Values.FindAsync(id);
             //return Ok(value);

@@ -19,15 +19,17 @@ namespace Application.Questionnaires
             public User Creator { get; set; }
             public DateTime? Date { get; set; }
             public ICollection<Question> Questions { get; set; }
-
         }
 
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IMediator _mediator;
+
+            public Handler(DataContext context, IMediator mediator)
             {
-                this._context = context;
+                _context = context;
+                _mediator = mediator;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -35,28 +37,17 @@ namespace Application.Questionnaires
                 List<Question> qs = new List<Question>();
                 foreach (var item in request.Questions)
                 {
-                    Console.WriteLine("item "+ item);
+                    Console.WriteLine("item " + item);
                     var question = new Question
                     {
                         Id = item.Id,
                         Title = item.Title,
-                        Description = item.Description
+                        Description = item.Description,
+                        Answers = item.Answers
+                       
                     };
                     qs.Add(question);
-
-                //    var questionAnswers = new QuestionAnswer
-                //    {
-                //        QuestionID = item.Id,
-                //        Question = question,
-                //        AnswerID = 
-                //        Answer
-                //}
-
                 }
-
-                Console.WriteLine("quest " + qs);
-
-              
 
                 var questionnaire = new Questionnaire
                 {
@@ -64,12 +55,11 @@ namespace Application.Questionnaires
                     Title = request.Title,
                     Description = request.Description,
                     Target = request.Target,
-                    //Creator = request.Creator,
+                    Creator = request.Creator ?? request.Creator,
                     Started = request.Date ?? DateTime.Now,
                     Questions = qs
                 };
 
-                //_context.QuestionAnswers.Add();
                 _context.Questionnaires.Add(questionnaire);
 
                 var success = await _context.SaveChangesAsync() > 0;
