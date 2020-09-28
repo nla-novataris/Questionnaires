@@ -43,9 +43,20 @@ namespace Application.Questionnaires
                         Description = item.Description
                     };
                     qs.Add(question);
+
+                //    var questionAnswers = new QuestionAnswer
+                //    {
+                //        QuestionID = item.Id,
+                //        Question = question,
+                //        AnswerID = 
+                //        Answer
+                //}
+
                 }
 
                 Console.WriteLine("quest " + qs);
+
+              
 
                 var questionnaire = new Questionnaire
                 {
@@ -58,6 +69,7 @@ namespace Application.Questionnaires
                     Questions = qs
                 };
 
+                //_context.QuestionAnswers.Add();
                 _context.Questionnaires.Add(questionnaire);
 
                 var success = await _context.SaveChangesAsync() > 0;

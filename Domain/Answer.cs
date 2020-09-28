@@ -7,8 +7,12 @@ namespace Domain
     {
         public Guid Id { get; set; }
         public string Description { get; set; }
-     //   public ICollection<UserAnswer> UserAnswers { get; set; }
-    
-    
+        public virtual Question Question { get; set; }
+        
+        //public ICollection<Question> RelatedQuestions { get; set; }
+        //public virtual ICollection<QuestionAnswer> QuestionAnswers { get; set; }
+
+
+
     }
 }

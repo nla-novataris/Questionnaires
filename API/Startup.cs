@@ -26,6 +26,7 @@ namespace API
             services.AddDbContext<DataContext>(opt =>
             {
                 //opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                opt.UseLazyLoadingProxies();
                 opt.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddCors(opt => {

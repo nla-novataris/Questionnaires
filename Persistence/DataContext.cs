@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Persistence
 {
     public class DataContext : DbContext
-    {   
+    {
         public DataContext(DbContextOptions options) : base(options)
         {
         }
@@ -17,65 +17,39 @@ namespace Persistence
         public DbSet<Questionnaire> Questionnaires { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
-       // public DbSet<UserAnswer> UserAnswers { get; set; }
+        //public DbSet<QuestionAnswer> QuestionAnswers { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder){
-            builder.Entity<Value>()
-            .HasData(
-                new Value { Id = 1, Name = "Value 101"},
-                new Value { Id = 2, Name = "Value 102"},
-                new Value { Id = 3, Name = "Value 103"}
-            );
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {   
+            // To add data to the db follow the pattern bellow, or configure Seed.cs
             //builder.Entity<User>()
             //.HasData(
-            //    new User { Id = "1", UserName = "TestUser", FirstName = "Test", 
-            //        LastName = "User", IsAdmin= true, Added= DateTime.Now}
+            //    new User
+            //    {
+            //        Id = "1",
+            //        UserName = "TestUser",
+            //        FirstName = "Test",
+            //        LastName = "User",
+            //        IsAdmin = true,
+            //        Added = DateTime.Now
+            //    }
             //);
 
-            builder.Entity<User>()
-            .HasData(
-                new User
-                {
-                    Id = "1",
-                    UserName = "TestUser",
-                    FirstName = "Test",
-                    LastName = "User",
-                    IsAdmin = true,
-                    Added = DateTime.Now
-                }
-            );
+            //Many to many relations
+            //Primary key
+            //builder.Entity<QuestionAnswer>(x => x.HasKey(qa =>
+            //    new { qa.QuestionID, qa.AnswerID }));
 
+            //builder.Entity<QuestionAnswer>()
+            //    .HasOne(q => q.Question)
+            //    .WithMany(qa => qa.QuestionAnswers)
+            //    .HasForeignKey(q => q.QuestionID);
 
-
-
-            builder.Entity<Questionnaire>()
-            .HasData(
-                new Questionnaire
-                {
-                    Id = Guid.NewGuid(),
-                    Title = "Test Questionnaire",
-                    Description = "Test ",
-                    Target = 12,
-                    Started = DateTime.Now
-                }
-            );
-
-
-            /*
-            builder.Entity<UserAnswer>(x => x.HasKey(ua => 
-                new { ua.UserId, ua.AnswerId }));
-         
-            builder.Entity<UserAnswer>()
-                .HasOne(u => u.User)
-                .WithMany(ua => ua.UserAnswers)
-                .HasForeignKey(u => u.UserId);
-
-            builder.Entity<UserAnswer>()
-                  .HasOne(a => a.Answer)
-                  .WithMany(ua => ua.UserAnswers)
-                  .HasForeignKey(a => a.AnswerId);
-          */
+            //builder.Entity<QuestionAnswer>()
+            //      .HasOne(a => a.Answer)
+            //      .WithMany(qa => qa.QuestionAnswers)
+            //      .HasForeignKey(a => a.AnswerID);
         }
     }
 }

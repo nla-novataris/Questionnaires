@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Text; 
 
 namespace Application.Questionnaires
 {
-    public class AnswerDto
+    public class QuestionDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
-        public DateTime Date { get; set; }
-        public string City { get; set; }
-        public string Venue { get; set; }
-     
-        //   public ICollection<UserAnswer> UserAnswers { get; set; }
+        public ICollection<AnswerDto> Answers { get; set; } = new List<AnswerDto>();
+
     }
 }

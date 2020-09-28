@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200928074623_QuestionAnswersAdded")]
+    partial class QuestionAnswersAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,12 +57,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid?>("QuestionId")
-                        .HasColumnType("char(36)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
 
                     b.ToTable("Answers");
                 });
@@ -88,6 +85,21 @@ namespace Persistence.Migrations
                     b.HasIndex("QuestionnaireId");
 
                     b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("Domain.QuestionAnswer", b =>
+                {
+                    b.Property<Guid>("QuestionID")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("AnswerID")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("QuestionID", "AnswerID");
+
+                    b.HasIndex("AnswerID");
+
+                    b.ToTable("QuestionAnswers");
                 });
 
             modelBuilder.Entity("Domain.Questionnaire", b =>
@@ -163,18 +175,26 @@ namespace Persistence.Migrations
                     b.ToTable("Values");
                 });
 
-            modelBuilder.Entity("Domain.Answer", b =>
-                {
-                    b.HasOne("Domain.Question", "Question")
-                        .WithMany("Answers")
-                        .HasForeignKey("QuestionId");
-                });
-
             modelBuilder.Entity("Domain.Question", b =>
                 {
                     b.HasOne("Domain.Questionnaire", "Questionnaire")
                         .WithMany("Questions")
                         .HasForeignKey("QuestionnaireId");
+                });
+
+            modelBuilder.Entity("Domain.QuestionAnswer", b =>
+                {
+                    b.HasOne("Domain.Answer", "Answer")
+                        .WithMany("QuestionAnswers")
+                        .HasForeignKey("AnswerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Question", "Question")
+                        .WithMany("QuestionAnswers")
+                        .HasForeignKey("QuestionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Questionnaire", b =>

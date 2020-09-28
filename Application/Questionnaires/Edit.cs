@@ -42,8 +42,14 @@ namespace Application.Questionnaires
                 questionnaire.Title = request.Title ?? questionnaire.Title; 
                 questionnaire.Description = request.Description ?? questionnaire.Description; 
                 questionnaire.Target = request.Target ?? questionnaire.Target; 
-                //questionnaire.Creator = request.Creator ?? questionnaire.Creator;  
-                questionnaire.LastEdited = request.Date ?? DateTime.Now;      
+                questionnaire.Creator = request.Creator ?? questionnaire.Creator;  
+                questionnaire.LastEdited = request.Date ?? DateTime.Now;
+
+                //foreach (var q in request.Questions)
+                //{
+                //    q
+                //}
+                //questionnaire.Questions = 
 
                 var success = await _context.SaveChangesAsync() > 0;
 

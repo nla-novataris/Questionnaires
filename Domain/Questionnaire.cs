@@ -9,10 +9,10 @@ namespace Domain
         public string Title { get; set; }
         public string Description  { get; set; }
         public int Target { get; set; }
-        public User Creator { get; set; } 
+        public virtual User Creator { get; set; } 
         public DateTime Started { get; set; }  
         public DateTime LastEdited { get; set; }  
         public DateTime Answered { get; set; }
-        public ICollection<Question> Questions { get; set; } = new List<Question>();    
+        public virtual ICollection<Question> Questions { get; set; } = new List<Question>();    
     }
 }

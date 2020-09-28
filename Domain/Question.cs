@@ -9,7 +9,10 @@ namespace Domain
         public string Title { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
-        public Questionnaire Questionnaire { get; set; }
-        public ICollection<Answer> Answers { get; set; } = new List<Answer>();
+        public virtual Questionnaire Questionnaire { get; set; }
+        public virtual ICollection<Answer> Answers { get; set; } = new List<Answer>();
+
+        //public virtual ICollection<QuestionAnswer> QuestionAnswers { get; set; }
+
     }
 }

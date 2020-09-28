@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -31,17 +32,34 @@ namespace Application.Questionnaires
             public async Task<QuestionnaireDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 var questionnaire = await _context.Questionnaires
-                    .Include(x => x.Questions)
-                    .ThenInclude(x => x.Answers)
-                    .Include(x => x.Creator)
-                    .SingleOrDefaultAsync(x => x.Id == request.Id);
+                    .FindAsync(request.Id);
+
+                var questionnaireToReturn = _mapper.Map<Questionnaire, QuestionnaireDto>(questionnaire);
+
+                var domainAnswers = new List<Answer>();
+
+                //foreach (var question in questionnaire.Questions)
+                //{
+                //    foreach (var qa in question.QuestionAnswers)
+                //    {
+                //        Console.WriteLine(qa.Question.Description);
+                //        Console.WriteLine(qa.Answer.Description);
+                        
+                //        domainAnswers.Add(qa.Answer);
+                //    }
+                //    var dtoAnswers = _mapper.Map<List<Answer>, List<AnswerDto>>(domainAnswers);
+                //}
+
+                //var qs = questionnaireToReturn.Questions;
+                
+
 
                 if (questionnaire == null)
                 {
                     throw new Exception("Could not find questionnaire");
                 }
 
-                var questionnaireToReturn = _mapper.Map<Questionnaire, QuestionnaireDto>(questionnaire);
+                
 
                 return questionnaireToReturn;
             }

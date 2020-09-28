@@ -12,7 +12,9 @@ namespace Persistence
             var users = new List<User>();
             var questionnaires = new List<Questionnaire>();
             var questions = new List<Question>();
-            var answers = new List<Answer>();
+            var answers1 = new List<Answer>();
+            var answers2 = new List<Answer>();
+            var questionAnswers = new List<QuestionAnswer>();
 
             users.Add(
                 new User
@@ -33,36 +35,44 @@ namespace Persistence
                        IsAdmin = true,
                    });
 
-            //Console.WriteLine(users[0]);
-
-            answers.Add(
+            answers1.Add(
                 new Answer
                 {
                     Description = "Yes",
                 });
-            answers.Add(
+            answers1.Add(
+                 new Answer
+                 {
+                     Description = "No",
+                 });
+
+            answers2.Add(
+                new Answer
+                {
+                    Description = "Yes",
+                });
+            answers2.Add(
                  new Answer
                  {
                      Description = "No",
                  });
 
             questions.Add(
-                new Question
-                {
-                    Title = "First question",
-                    Description = "Do you like fish",
-                    Category = "Food",
-                    Answers = answers
-                });
-            questions.Add(
                  new Question
                  {
                      Title = "Second question",
                      Description = "Do you like cats",
                      Category = "Pets",
-                     Answers = answers
+                     Answers = answers1
                  });
-
+            questions.Add(
+               new Question
+               {
+                   Title = "First question",
+                   Description = "Do you like fish",
+                   Category = "Food",
+                   Answers = answers2
+               });
             questionnaires.Add(
              new Questionnaire
              {
@@ -73,6 +83,7 @@ namespace Persistence
                  Questions = questions,
                  Started = DateTime.Now,
              });
+
             questionnaires.Add(
                  new Questionnaire
                  {
@@ -86,21 +97,28 @@ namespace Persistence
 
             if (!context.Users.Any())
             {
+
                 context.Users.AddRange(users);
                 context.SaveChanges();
             }
 
-            if (!context.Answers.Any())
-            {
-                context.Answers.AddRange(answers);
-                context.SaveChanges();
-            }
+            //if (!context.Answers.Any())
+            //{
+            //    context.Answers.AddRange(answers);
+            //    context.SaveChanges();
+            //}
 
             if (!context.Questions.Any())
             {
                 context.Questions.AddRange(questions);
                 context.SaveChanges();
             }
+
+            //if (!context.QuestionAnswers.Any())
+            //{
+            //    context.QuestionAnswers.AddRange(questionAnswers);
+            //    context.SaveChanges();
+            //}
 
             if (!context.Questionnaires.Any())
             {
