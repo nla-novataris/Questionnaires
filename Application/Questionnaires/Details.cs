@@ -14,7 +14,7 @@ namespace Application.Questionnaires
     {
         public class Query : IRequest<QuestionnaireDto>
         {
-            public Guid Id { get; set; }
+            public string Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, QuestionnaireDto>
@@ -49,15 +49,11 @@ namespace Application.Questionnaires
                 //}
 
                 //var qs = questionnaireToReturn.Questions;
-                
-
 
                 if (questionnaire == null)
                 {
                     throw new Exception("Could not find questionnaire");
                 }
-
-                
 
                 return questionnaireToReturn;
             }

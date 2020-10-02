@@ -12,7 +12,7 @@ namespace Application.Questionnaires
     {
         public class Command : IRequest
         {
-            public Guid Id { get; set; }
+            public string Id { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
             public int Target { get; set; }
@@ -35,18 +35,23 @@ namespace Application.Questionnaires
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 List<Question> qs = new List<Question>();
-                foreach (var item in request.Questions)
+
+                if (request.Questions != null && request.Questions.Count > 0)
                 {
-                    Console.WriteLine("item " + item);
-                    var question = new Question
+
+                    foreach (var item in request.Questions)
                     {
-                        Id = item.Id,
-                        Title = item.Title,
-                        Description = item.Description,
-                        Answers = item.Answers
-                       
-                    };
-                    qs.Add(question);
+                        Console.WriteLine("item " + item);
+                        var question = new Question
+                        {
+                            Id = item.Id,
+                            Title = item.Title,
+                            Description = item.Description,
+                            Answers = item.Answers
+
+                        };
+                        qs.Add(question);
+                    }
                 }
 
                 var questionnaire = new Questionnaire

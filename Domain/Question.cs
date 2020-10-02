@@ -12,7 +12,6 @@ namespace Domain
         public virtual Questionnaire Questionnaire { get; set; }
         public virtual ICollection<Answer> Answers { get; set; } = new List<Answer>();
 
-        //public virtual ICollection<QuestionAnswer> QuestionAnswers { get; set; }
 
     }
 }

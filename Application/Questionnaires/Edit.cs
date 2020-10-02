@@ -13,7 +13,7 @@ namespace Application.Questionnaires
     {
         public class Command : IRequest
         {
-            public Guid Id { get; set; }
+            public string Id { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
             public int? Target { get; set; }
@@ -35,7 +35,6 @@ namespace Application.Questionnaires
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-
                 var questionnaire = await _context.Questionnaires.FindAsync(request.Id);
 
                 if (questionnaire == null)
@@ -43,81 +42,69 @@ namespace Application.Questionnaires
                     throw new Exception("Could not find Qs");
                 }
 
-                List<Question> qs = null;
-                if (request.Questions != null)
-                {   
-                    foreach (var item in request.Questions)
-                    {   
-
-                        Console.WriteLine("item " + item);
-                        Console.WriteLine("item " + item.Description);
-
-                        if (!questionnaire.Questions.Any(n => n.Id == item.Id))
-                            if (qs == null)
-                            {
-                                qs = new List<Question>();
-                            }
-                        var question = new Question
-                        {
-                            Id = item.Id,
-                            Title = item.Title,
-                            Description = item.Description,
-                            Answers = item.Answers
-
-                        };
-                        qs.Add(question);
-                    }
-                }
-
                 questionnaire.Title = request.Title ?? questionnaire.Title;
                 questionnaire.Description = request.Description ?? questionnaire.Description;
                 questionnaire.Target = request.Target ?? questionnaire.Target;
                 questionnaire.Creator = request.Creator ?? questionnaire.Creator;
                 questionnaire.LastEdited = request.Date ?? DateTime.Now;
-                questionnaire.Questions = qs ?? questionnaire.Questions;
-
-                //foreach (var reqQuest in request.Questions)
-                //{
-                //    count++;
-                //    Console.WriteLine($"Element #{count}:");
-                //    Console.WriteLine(request.Questions.IndexOf(reqQuest));
-                //    Console.WriteLine(request.Questions.Count());
-                //    Console.WriteLine(questionnaire.Questions.Count());
-
-                //    var value = questionnaire.Questions.First(item => item.Id == reqQuest.Id);
-
-                //    if (value != null)
-                //    {
-                //        Console.WriteLine("value");
-                //        Console.WriteLine(value.Id);
-
-                //        Questions.Edit.Command qCommand = new Questions.Edit.Command();
-                //        qCommand.Id = reqQuest.Id;
-                //        qCommand.Title = reqQuest.Title;
-                //        qCommand.Description = reqQuest.Description;
-                //        qCommand.Category = reqQuest.Category;
-                //        qCommand.Questionnaire = questionnaire;
-                //        qCommand.Answers = (List<Answer>)reqQuest.Answers;
-                //        // return await _mediator.Send(qCommand);
-
-
-                //       // await Questions.Edit.Handler.Handle(qCommand, new CancellationToken());
-                //        return await _mediator.Send(qCommand);
-                //    }
-                //    else
-                //    {
-                //        Questions.Create.Command qCommand = new Questions.Create.Command();
-                //        qCommand.Id = reqQuest.Id;
-                //        qCommand.Title = reqQuest.Title;
-                //        qCommand.Description = reqQuest.Description;
-                //        qCommand.Category = reqQuest.Category;
-                //        qCommand.Questionnaire = questionnaire;
-                //        qCommand.Answers = (List<Answer>)reqQuest.Answers;
-                //        return await _mediator.Send(qCommand);
-                //    }
-                //}
+                //questionnaire.Questions = qs ?? questionnaire.Questions;
 
                 var success = await _context.SaveChangesAsync() > 0;
+
+                if (request.Questions.Count > 0)
+                {
+                    foreach (var requestQuestion in request.Questions)
+                    {
+                        List<Question> questions = (List<Question>)questionnaire.Questions;
+
+                        // Hvis Questionnaire ikke indeholder et spørgsmål med requestQuestion's id skal det oprettes som nyt
+                        if (null == (questions.Find(x => x.Id == requestQuestion.Id)))
+                        {
+                            Questions.Create.Command qCommand = new Questions.Create.Command();
+                            qCommand.Id = requestQuestion.Id;
+                            qCommand.Title = requestQuestion.Title;
+                            qCommand.Description = requestQuestion.Description;
+                            qCommand.Category = requestQuestion.Category;
+                            qCommand.Questionnaire = questionnaire;
+                            qCommand.Answers = (List<Answer>)requestQuestion.Answers;
+                            var successQ = await _mediator.Send(qCommand);
+                        }
+                        // Ellers skal der rettes
+                        else
+                        {
+                            Questions.Edit.Command qCommand = new Questions.Edit.Command();
+                            qCommand.Id = requestQuestion.Id;
+                            qCommand.Title = requestQuestion.Title;
+                            qCommand.Description = requestQuestion.Description;
+                            qCommand.Category = requestQuestion.Category;
+                            qCommand.Questionnaire = questionnaire;
+                            qCommand.Answers = (List<Answer>)requestQuestion.Answers;
+                            var successQ = await _mediator.Send(qCommand);
+                        }
+                    }
+                }
+
+                //Denne metode virkede også
+                //List<Question> qs = null;
+                //if (request.Questions != null)
+                //{
+                //    foreach (var item in request.Questions)
+                //    {
+                //        Console.WriteLine("item " + item);
+                //        Console.WriteLine("item " + item.Description);
+
+                //        _context.Questions.Add(new Question
+                //        {
+                //            Id = item.Id,
+                //            Title = item.Title,
+                //            Description = item.Description,
+                //            Answers = item.Answers,
+                //            Questionnaire = questionnaire
+                //        });
+
+                //        var successQ = await _context.SaveChangesAsync() > 0;
+                //    }
+                //}
 
                 if (success) return Unit.Value;
 

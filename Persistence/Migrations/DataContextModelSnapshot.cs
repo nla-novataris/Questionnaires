@@ -77,8 +77,8 @@ namespace Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid?>("QuestionnaireId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("QuestionnaireId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("Title")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -92,9 +92,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Questionnaire", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<DateTime>("Answered")
                         .HasColumnType("datetime(6)");

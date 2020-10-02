@@ -9,14 +9,14 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200914105423_QuestionnairesQuestionChanged2")]
-    partial class QuestionnairesQuestionChanged2
+    [Migration("20200930101342_CleanSlade")]
+    partial class CleanSlade
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7")
+                .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Domain.Activity", b =>
@@ -54,25 +54,15 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Category")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("City")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Title")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Venue")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                    b.Property<Guid?>("QuestionId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Answers");
                 });
@@ -89,8 +79,8 @@ namespace Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid?>("QuestionnaireId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("QuestionnaireId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("Title")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -104,9 +94,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Questionnaire", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<DateTime>("Answered")
                         .HasColumnType("datetime(6)");
@@ -159,17 +148,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            Added = new DateTime(2020, 9, 14, 12, 54, 22, 795, DateTimeKind.Local).AddTicks(384),
-                            FirstName = "Test",
-                            IsAdmin = true,
-                            LastName = "User",
-                            UserName = "TestUser"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Value", b =>
@@ -184,23 +162,13 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Values");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Value 101"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Value 102"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Value 103"
-                        });
+            modelBuilder.Entity("Domain.Answer", b =>
+                {
+                    b.HasOne("Domain.Question", "Question")
+                        .WithMany("Answers")
+                        .HasForeignKey("QuestionId");
                 });
 
             modelBuilder.Entity("Domain.Question", b =>

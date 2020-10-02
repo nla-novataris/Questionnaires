@@ -76,6 +76,7 @@ namespace Persistence
             questionnaires.Add(
              new Questionnaire
              {
+                 Id = "0001",
                  Title = "First questionnaire",
                  Description = "An enquiry into the nature of questionnaires",
                  Target = 17,
@@ -87,6 +88,7 @@ namespace Persistence
             questionnaires.Add(
                  new Questionnaire
                  {
+                     Id = "0002",
                      Title = "Second questionnaire",
                      Description = "A second enquiry into the nature of questionnaires",
                      Target = 37,
@@ -108,11 +110,11 @@ namespace Persistence
             //    context.SaveChanges();
             //}
 
-            if (!context.Questions.Any())
-            {
-                context.Questions.AddRange(questions);
-                context.SaveChanges();
-            }
+            //if (!context.Questions.Any())
+            //{
+            //    context.Questions.AddRange(questions);
+            //    context.SaveChanges();
+            //}
 
             //if (!context.QuestionAnswers.Any())
             //{

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class NewMigration : Migration
+    public partial class CleanSlade : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,40 +23,6 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Activities", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Answers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Category = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    City = table.Column<string>(nullable: true),
-                    Venue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Answers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Questions",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Category = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    City = table.Column<string>(nullable: true),
-                    Venue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Questions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,7 +58,7 @@ namespace Persistence.Migrations
                 name: "Questionnaires",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Target = table.Column<int>(nullable: false),
@@ -112,25 +78,60 @@ namespace Persistence.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Added", "FirstName", "IsAdmin", "LastName", "UserName" },
-                values: new object[] { "1", new DateTime(2020, 9, 13, 20, 2, 50, 619, DateTimeKind.Local).AddTicks(2127), "Test", true, "User", "TestUser" });
-
-            migrationBuilder.InsertData(
-                table: "Values",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
+            migrationBuilder.CreateTable(
+                name: "Questions",
+                columns: table => new
                 {
-                    { 1, "Value 101" },
-                    { 2, "Value 102" },
-                    { 3, "Value 103" }
+                    Id = table.Column<Guid>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Category = table.Column<string>(nullable: true),
+                    QuestionnaireId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Questions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Questions_Questionnaires_QuestionnaireId",
+                        column: x => x.QuestionnaireId,
+                        principalTable: "Questionnaires",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Answers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    QuestionId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Answers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Answers_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Answers_QuestionId",
+                table: "Answers",
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questionnaires_CreatorId",
                 table: "Questionnaires",
                 column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_QuestionnaireId",
+                table: "Questions",
+                column: "QuestionnaireId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -142,13 +143,13 @@ namespace Persistence.Migrations
                 name: "Answers");
 
             migrationBuilder.DropTable(
-                name: "Questionnaires");
+                name: "Values");
 
             migrationBuilder.DropTable(
                 name: "Questions");
 
             migrationBuilder.DropTable(
-                name: "Values");
+                name: "Questionnaires");
 
             migrationBuilder.DropTable(
                 name: "Users");

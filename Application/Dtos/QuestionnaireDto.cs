@@ -5,7 +5,7 @@ namespace Application.Dtos
 {
     public class QuestionnaireDto
     {
-            public Guid Id { get; set; }
+            public string Id { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
             public int Target { get; set; }
