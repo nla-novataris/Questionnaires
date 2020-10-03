@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -23,10 +22,9 @@ namespace Application.Questionnaires
             private readonly IMapper _mapper;
 
             public Handler(DataContext context, IMapper mapper)
-
             {
-                this._context = context;
-                this._mapper = mapper;
+                _context = context;
+                _mapper = mapper;
             }
 
             public async Task<QuestionnaireDto> Handle(Query request, CancellationToken cancellationToken)
@@ -35,20 +33,6 @@ namespace Application.Questionnaires
                     .FindAsync(request.Id);
 
                 var questionnaireToReturn = _mapper.Map<Questionnaire, QuestionnaireDto>(questionnaire);
-
-                //foreach (var question in questionnaire.Questions)
-                //{
-                //    foreach (var qa in question.QuestionAnswers)
-                //    {
-                //        Console.WriteLine(qa.Question.Description);
-                //        Console.WriteLine(qa.Answer.Description);
-                        
-                //        domainAnswers.Add(qa.Answer);
-                //    }
-                //    var dtoAnswers = _mapper.Map<List<Answer>, List<AnswerDto>>(domainAnswers);
-                //}
-
-                //var qs = questionnaireToReturn.Questions;
 
                 if (questionnaire == null)
                 {

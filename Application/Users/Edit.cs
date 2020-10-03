@@ -17,19 +17,21 @@ namespace Application.Users
             public string LastName { get; set; }
             public bool? IsAdmin { get; set; }
             public DateTime Added { get; set; }
+            public Questionnaire Questionnaire { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IMediator _mediator;
+            public Handler(DataContext context, IMediator mediator)
             {
                 _context = context;
+                _mediator = mediator;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-
                 var user = await _context.Users.FindAsync(request.Id);
 
                 if (user == null)
@@ -41,7 +43,11 @@ namespace Application.Users
                 user.FirstName = request.FirstName ?? user.FirstName;
                 user.LastName = request.LastName ?? user.LastName;
                 user.IsAdmin = request.IsAdmin ?? user.IsAdmin;
-                
+
+                if (request.Questionnaire != null)
+                {
+                    user.Questionnaires.Add(request.Questionnaire);
+                }
                 var success = await _context.SaveChangesAsync() > 0;
 
                 if (success) return Unit.Value;

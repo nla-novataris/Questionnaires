@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Users;
-using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Application.Users;
+using Application.Dtos;
 
 namespace API.Controllers
 {
@@ -20,13 +19,13 @@ namespace API.Controllers
 
         // GET api/users
         [HttpGet]
-        public async Task<ActionResult<List<User>>> List()
+        public async Task<ActionResult<List<UserDto>>> List()
         {
             return await _mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> Details(string id)
+        public async Task<ActionResult<UserDto>> Details(string id)
         {
             return await _mediator.Send(new Details.Query { Id = id });
         }

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Dtos;
+using AutoMapper;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -10,23 +12,25 @@ namespace Application.Users
 {
     public class List
     {
-        public class Query : IRequest<List<User>> { }
+        public class Query : IRequest<List<UserDto>> { }
 
-        public class Handler : IRequestHandler<Query, List<User>>
+        public class Handler : IRequestHandler<Query, List<UserDto>>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IMapper _mapper;
+
+            public Handler(DataContext context, IMapper mapper)
             {
                 _context = context;
-
+                _mapper = mapper;
             }
 
-            public async Task<List<User>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<List<UserDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-
                 var users = await _context.Users.ToListAsync();
+                var usersToReturn = _mapper.Map<List<User>, List<UserDto>>(users);
 
-                return users;
+                return usersToReturn;
             }
         }
     }
