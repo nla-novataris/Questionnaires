@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
@@ -15,10 +14,9 @@ namespace API.Controllers
         private readonly IMediator _mediator;
         public QuestionnairesController(IMediator mediator)
         {
-            this._mediator = mediator;
+            _mediator = mediator;
         }
 
-        // GET api/activities
         [HttpGet]
         public async Task<ActionResult<List<QuestionnaireDto>>> List()
         {

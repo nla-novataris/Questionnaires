@@ -1,6 +1,7 @@
 ﻿using System;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Persistence
 {
@@ -21,7 +22,33 @@ namespace Persistence
 
 
         protected override void OnModelCreating(ModelBuilder builder)
-        {   
+        {
+
+            builder.Entity<Questionnaire>()
+                .HasOne(q => q.Creator)
+                .WithMany(q => q.Questionnaires)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Questionnaire>()
+               .HasMany(q => q.Questions)
+               .WithOne(q => q.Questionnaire)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Question>()
+           .HasMany(q => q.Answers)
+           .WithOne(q => q.Question)
+           .OnDelete(DeleteBehavior.Cascade);
+
+
+            //builder.Entity<Questionnaire>()
+            //    .HasMany<Question>(s => s.Questions)
+            //    .WillCascadeOnDelete(true);
+
+
+            //    modelBuilder.Entity<Book>()
+            //.HasOptional<Author>(b => b.Author)
+            //.WithMany()
+            //.WillCascadeOnDelete(false);
             // To add data to the db follow the pattern bellow, or configure Seed.cs
             //builder.Entity<User>()
             //.HasData(
