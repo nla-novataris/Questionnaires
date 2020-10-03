@@ -26,11 +26,12 @@ namespace Application.Questions
             private readonly DataContext _context;
             public Handler(DataContext context)
             {
-                this._context = context;
+                _context = context;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
+                
                 var question = new Question
                 {
                     Id = request.Id,
