@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Persistence;
 
@@ -18,9 +15,8 @@ namespace API.Controllers
 
         // GET /
         [HttpGet]
-        public ActionResult<IEnumerable<Value>> Get()
+        public ActionResult Get()
         {
-            // var values = await _context.Values.ToListAsync();
             var hello = "hello 1";
             return Ok(hello);
         }

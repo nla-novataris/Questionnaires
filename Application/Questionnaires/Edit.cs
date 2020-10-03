@@ -65,7 +65,7 @@ namespace Application.Questionnaires
                             qCommand.Description = requestQuestion.Description;
                             qCommand.Category = requestQuestion.Category;
                             qCommand.Questionnaire = questionnaire;
-                            qCommand.Answers = (List<Answer>)requestQuestion.Answers;
+                            qCommand.Answers = (List<Domain.Answer>)requestQuestion.Answers;
                             var successQ = await _mediator.Send(qCommand);
                         }
                         // Ellers skal der rettes
@@ -77,7 +77,7 @@ namespace Application.Questionnaires
                             qCommand.Description = requestQuestion.Description;
                             qCommand.Category = requestQuestion.Category;
                             qCommand.Questionnaire = questionnaire;
-                            qCommand.Answers = (List<Answer>)requestQuestion.Answers;
+                            qCommand.Answers = (List<Domain.Answer>)requestQuestion.Answers;
                             var successQ = await _mediator.Send(qCommand);
                         }
                     }

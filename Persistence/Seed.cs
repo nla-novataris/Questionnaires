@@ -14,7 +14,7 @@ namespace Persistence
             var questions = new List<Question>();
             var answers1 = new List<Answer>();
             var answers2 = new List<Answer>();
-            var questionAnswers = new List<QuestionAnswer>();
+            var questionAnswers = new List<UserAnswer>();
 
             users.Add(
                 new User

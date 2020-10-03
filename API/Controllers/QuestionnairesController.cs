@@ -46,5 +46,17 @@ namespace API.Controllers
         {
             return await _mediator.Send(new Delete.Command{Id = id});
         }
+
+        [HttpPost("answer")]
+        public async Task<ActionResult<Unit>> Answer(Answer.Command command)
+        {
+            return await _mediator.Send(command);
+        }
+
+        [HttpDelete("answer")]
+        public async Task<ActionResult<Unit>> UnAnswer(UnAnswer.Command command)
+        {
+            return await _mediator.Send(command);
+        }
     }
 }
