@@ -12,7 +12,6 @@ namespace Application.Questionnaires
         {
             public string Id { get; set; }
         }
-
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
@@ -23,7 +22,6 @@ namespace Application.Questionnaires
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-
                 var questionnaire = await _context.Questionnaires.FindAsync(request.Id);
 
                 if (questionnaire == null)

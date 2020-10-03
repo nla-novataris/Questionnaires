@@ -14,7 +14,6 @@ namespace Application.Questionnaires
         {
             public ICollection<UserAnswer> UserAnswers { get; set; }
         }
-
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
@@ -23,7 +22,6 @@ namespace Application.Questionnaires
             {
                 _context = context;
             }
-
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 foreach (var answer in request.UserAnswers)

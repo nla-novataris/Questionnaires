@@ -8,13 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Application.Dtos;
 
-
 namespace Application.Questionnaires
 {
     public class List
     {
         public class Query : IRequest<List<QuestionnaireDto>> { }
-
         public class Handler : IRequestHandler<Query, List<QuestionnaireDto>>
         {
             private readonly DataContext _context;
@@ -25,7 +23,6 @@ namespace Application.Questionnaires
                 _context = context;
                 _mapper = mapper;
             }
-
             public async Task<List<QuestionnaireDto>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var questionnaires = await _context.Questionnaires.ToListAsync();

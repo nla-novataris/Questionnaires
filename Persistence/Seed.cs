@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Domain;
 
 namespace Persistence
@@ -14,7 +15,7 @@ namespace Persistence
             var questions = new List<Question>();
             var answers1 = new List<Answer>();
             var answers2 = new List<Answer>();
-            var questionAnswers = new List<UserAnswer>();
+            var userAnswers = new List<UserAnswer>();
 
             users.Add(
                 new User
@@ -97,34 +98,40 @@ namespace Persistence
                      Started = DateTime.Now,
                  });
 
+            userAnswers.Add(
+                new UserAnswer
+                {
+                    User = users[0],
+                    UserId = users[0].Id,
+                    Answer = answers1[0],
+                    AnswerId = answers1[0].Id,
+                    AnswerDate = DateTime.Now
+                });
+
+            userAnswers.Add(new UserAnswer
+            {
+                User = users[1],
+                UserId = users[1].Id,
+                Answer = answers1[1],
+                AnswerId = answers1[1].Id,
+                AnswerDate = DateTime.Now
+            });
+
             if (!context.Users.Any())
             {
-
                 context.Users.AddRange(users);
                 context.SaveChanges();
             }
 
-            //if (!context.Answers.Any())
-            //{
-            //    context.Answers.AddRange(answers);
-            //    context.SaveChanges();
-            //}
-
-            //if (!context.Questions.Any())
-            //{
-            //    context.Questions.AddRange(questions);
-            //    context.SaveChanges();
-            //}
-
-            //if (!context.QuestionAnswers.Any())
-            //{
-            //    context.QuestionAnswers.AddRange(questionAnswers);
-            //    context.SaveChanges();
-            //}
-
             if (!context.Questionnaires.Any())
             {
                 context.Questionnaires.AddRange(questionnaires);
+                context.SaveChanges();
+            }
+
+            if (!context.UserAnswers.Any())
+            {
+                context.UserAnswers.AddRange(userAnswers);
                 context.SaveChanges();
             }
         }

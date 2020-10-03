@@ -15,7 +15,6 @@ namespace Application.Questionnaires
         {
             public string Id { get; set; }
         }
-
         public class Handler : IRequestHandler<Query, QuestionnaireDto>
         {
             private readonly DataContext _context;
@@ -26,7 +25,6 @@ namespace Application.Questionnaires
                 _context = context;
                 _mapper = mapper;
             }
-
             public async Task<QuestionnaireDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 var questionnaire = await _context.Questionnaires

@@ -38,7 +38,6 @@ namespace Application.Questionnaires
 
                 if (request.Questions != null && request.Questions.Count > 0)
                 {
-
                     foreach (var item in request.Questions)
                     {
                         Console.WriteLine("item " + item);
@@ -67,8 +66,6 @@ namespace Application.Questionnaires
                 _context.Questionnaires.Add(questionnaire);
 
                 var success = await _context.SaveChangesAsync() > 0;
-
-
 
                 if (success) return Unit.Value;
 

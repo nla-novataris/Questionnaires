@@ -83,28 +83,6 @@ namespace Application.Questionnaires
                     }
                 }
 
-                //Denne metode virkede også
-                //List<Question> qs = null;
-                //if (request.Questions != null)
-                //{
-                //    foreach (var item in request.Questions)
-                //    {
-                //        Console.WriteLine("item " + item);
-                //        Console.WriteLine("item " + item.Description);
-
-                //        _context.Questions.Add(new Question
-                //        {
-                //            Id = item.Id,
-                //            Title = item.Title,
-                //            Description = item.Description,
-                //            Answers = item.Answers,
-                //            Questionnaire = questionnaire
-                //        });
-
-                //        var successQ = await _context.SaveChangesAsync() > 0;
-                //    }
-                //}
-
                 if (success) return Unit.Value;
 
                 throw new Exception("Problem saving changes");
