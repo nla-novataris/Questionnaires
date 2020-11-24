@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace Persistence
 {
     public class Seed
     {
-        public static void SeedData(DataContext context)
+        public static async Task SeedData(DataContext context, UserManager<User> userManager)
         {
             var users = new List<User>();
             var questionnaires = new List<Questionnaire>();
@@ -17,6 +19,7 @@ namespace Persistence
             var answers2 = new List<Answer>();
             var userAnswers = new List<UserAnswer>();
 
+            /*
             users.Add(
                 new User
                 {
@@ -35,6 +38,33 @@ namespace Persistence
                        UserName = "Karlo 2",
                        IsAdmin = true,
                    });
+            */
+
+            if (!userManager.Users.Any())
+            {
+                users.Add(
+                    new User
+                    {
+                        Id = "00001",
+                        FirstName = "Karl",
+                        LastName = "Ost",
+                        UserName = "Karlo",
+                        IsAdmin = true,
+                    });
+                users.Add(
+                    new User
+                    {
+                        Id = "00002",
+                        FirstName = "Karl 2",
+                        LastName = "Ost 2",
+                        UserName = "Karlo 2",
+                        IsAdmin = true,
+                    });
+                foreach (var user in users)
+                {
+                    await userManager.CreateAsync(user, "Pa$$w0rd");
+                }
+            }
 
             answers1.Add(
                 new Answer

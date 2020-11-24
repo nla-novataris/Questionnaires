@@ -8,6 +8,8 @@ namespace Domain
         public virtual User User { get; set; }
         public Guid AnswerId { get; set; }
         public virtual Answer Answer { get; set; }
+        
+        
         public DateTime AnswerDate { get; set; }
     }
 }

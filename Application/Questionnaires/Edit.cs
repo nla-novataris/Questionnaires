@@ -56,7 +56,7 @@ namespace Application.Questionnaires
                     {
                         List<Question> questions = (List<Question>)questionnaire.Questions;
 
-                        // Hvis Questionnaire ikke indeholder et spørgsmål med requestQuestion's id skal det oprettes som nyt
+                        // Hvis Questionnaire ikke indeholder et spï¿½rgsmï¿½l med requestQuestion's id skal det oprettes som nyt
                         if (null == (questions.Find(x => x.Id == requestQuestion.Id)))
                         {
                             Questions.Create.Command qCommand = new Questions.Create.Command();

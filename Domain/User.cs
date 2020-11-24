@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace Domain
 {
-    public class User
+    public class User : IdentityUser
     {
         public string Id { get; set; }
         public string UserName { get; set; }
