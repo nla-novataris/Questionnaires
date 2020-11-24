@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Application.Users;
 using Application.Dtos;
+using Domain;
 
 namespace API.Controllers
 {
@@ -47,6 +48,12 @@ namespace API.Controllers
         public async Task<ActionResult<Unit>> Delete(string id)
         {
             return await _mediator.Send(new Delete.Command { Id = id });
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<User>> Login(Login.Query query)
+        {
+            return await _mediator.Send(query);
         }
     }
 }
