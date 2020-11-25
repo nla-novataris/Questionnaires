@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Application.Dtos;
+using Application.Interfaces;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -31,11 +32,13 @@ namespace Application.Users
         {
             private readonly UserManager<AppUser> _userManager;
             private readonly SignInManager<AppUser> _signInManager;
+            private readonly IJwtGenerator _jwtGenerator;
 
-            public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+            public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator)
             {
                 _userManager = userManager;
                 _signInManager = signInManager;
+                _jwtGenerator = jwtGenerator;
             }
 
             public async Task<UserDto> Handle(Query request, CancellationToken cancellationToken)
@@ -45,7 +48,6 @@ namespace Application.Users
                 if (user == null)
                 {
                     //throw error
-                    //hrow new RestException(HttpStatusCode.Unauthorized.ToString());
                     throw new HttpResponseException(HttpStatusCode.Unauthorized);
                 }
 
@@ -61,12 +63,11 @@ namespace Application.Users
                         FirstName = user.FirstName,
                         LastName = user.LastName,
                         Added = user.Added,
-                        Token = "This will be a token"
+                        Token = _jwtGenerator.CreateToken(user)
                     };
                 }
                 
                 //throw exception
-                //throw new RestException(HttpStatusCode.Unauthorized.ToString());
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
         }
