@@ -6,9 +6,6 @@ namespace Domain
 {
     public class User : IdentityUser
     {
-        private string _username;
-
-        public override string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool? IsAdmin { get; set; }

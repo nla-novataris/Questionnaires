@@ -45,8 +45,6 @@ namespace Application.Users
                     LastName = request.LastName,
                     IsAdmin = request.IsAdmin,
                     Added = request.Added,
-                    Email = request.Email,
-                    NormalizedEmail = request.Email.ToUpper(),
                     NormalizedUserName = request.UserName.ToUpper()
                 };
                 
