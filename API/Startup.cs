@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using Application.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +14,8 @@ using AutoMapper;
 using Application.Questionnaires;
 using Domain;
 using Infrastructure.Security;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API
 {
@@ -53,7 +56,16 @@ namespace API
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             
-            services.AddAuthentication();
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super duper hemmelig kode"));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                    opt.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = key,
+                        ValidateAudience = false, //kan måske ændres senere
+                        ValidateIssuer = false //kan måske ændres senere
+                    })
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,10 +79,10 @@ namespace API
             // app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
-
             app.UseCors("CorsPolicy");
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
