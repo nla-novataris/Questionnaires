@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Domain;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Persistence;
 
 namespace Application.Users
@@ -17,14 +18,18 @@ namespace Application.Users
             public string LastName { get; set; }
             public bool? IsAdmin { get; set; }
             public DateTime Added { get; set; }
+            
+            public string Email { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly UserManager<User> _userManager;
+            public Handler(DataContext context, UserManager<User> userManager)
             {
                 this._context = context;
+                this._userManager = userManager;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -37,14 +42,21 @@ namespace Application.Users
                     FirstName = request.FirstName,
                     LastName = request.LastName,
                     IsAdmin = request.IsAdmin,
-                    Added = request.Added
+                    Added = request.Added,
+                    Email = request.Email,
+                    NormalizedEmail = request.Email.ToUpper(),
+                    NormalizedUserName = request.UserName.ToUpper()
                 };
+                
+                await _userManager.CreateAsync(user, "Pa$$w0rd");
+                //_context.Users.Add(user);
 
-                _context.Users.Add(user);
-
+                /*
                 var success = await _context.SaveChangesAsync() > 0;
 
                 if (success) return Unit.Value;
+                */
+                return Unit.Value;
 
                 throw new Exception("Problem saving changes");
             }

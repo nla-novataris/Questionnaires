@@ -11,7 +11,7 @@ namespace Application.Users
     {
         public class Query : IRequest<User>
         {
-            public string Username {get; set;}
+            public string UserName {get; set;}
             public string Password { get; set; }
         }
 
@@ -19,7 +19,7 @@ namespace Application.Users
         {
             public QueryValidator()
             {
-                RuleFor(x => x.Username).NotEmpty();
+                RuleFor(x => x.UserName).NotEmpty();
                 RuleFor(x => x.Password).NotEmpty();
             }
         }
@@ -37,7 +37,7 @@ namespace Application.Users
 
             public async Task<User> Handle(Query request, CancellationToken cancellationToken)
             {
-                var user = await _userManager.FindByNameAsync(request.Username);
+                var user = await _userManager.FindByNameAsync(request.UserName);
 
                 if (user == null)
                 {

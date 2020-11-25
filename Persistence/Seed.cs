@@ -46,7 +46,8 @@ namespace Persistence
                     new User
                     {
                         Id = "00001",
-                        FirstName = "Karl",
+                        Email = "karl@gmail.com",
+                        FirstName = "Karlsmart",
                         LastName = "Ost",
                         UserName = "Karlo",
                         IsAdmin = true,
@@ -62,6 +63,8 @@ namespace Persistence
                     });
                 foreach (var user in users)
                 {
+                    user.NormalizedEmail = user.Email.ToUpper();
+                    user.NormalizedUserName = user.UserName.ToUpper();
                     await userManager.CreateAsync(user, "Pa$$w0rd");
                 }
             }
