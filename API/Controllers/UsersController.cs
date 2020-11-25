@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Application.Users;
 using Application.Dtos;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -45,6 +46,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<Unit>> Delete(string id)
         {
             return await _mediator.Send(new Delete.Command { Id = id });

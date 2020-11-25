@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Application.Dtos;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -33,12 +34,14 @@ namespace Application.Users
             private readonly UserManager<AppUser> _userManager;
             private readonly SignInManager<AppUser> _signInManager;
             private readonly IJwtGenerator _jwtGenerator;
+            private readonly IMapper _mapper;
 
-            public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator)
+            public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator, IMapper mapper)
             {
                 _userManager = userManager;
                 _signInManager = signInManager;
                 _jwtGenerator = jwtGenerator;
+                _mapper = mapper;
             }
 
             public async Task<UserDto> Handle(Query request, CancellationToken cancellationToken)
@@ -55,7 +58,7 @@ namespace Application.Users
 
                 if (result.Succeeded)
                 {
-                    //TODO: Generate token
+                    /*
                     return new UserDto()
                     {
                         Id = user.Id, //bør måske fjernes
@@ -65,6 +68,10 @@ namespace Application.Users
                         Added = user.Added,
                         Token = _jwtGenerator.CreateToken(user)
                     };
+                    */
+                    var userToReturn = _mapper.Map<AppUser, UserDto>(user);
+                    userToReturn.Token = _jwtGenerator.CreateToken(user);
+                    return userToReturn;
                 }
                 
                 //throw exception
