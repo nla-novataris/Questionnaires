@@ -9,7 +9,7 @@ namespace Domain
         public string Title { get; set; }
         public string Description  { get; set; }
         public int Target { get; set; }
-        public virtual User Creator { get; set; } 
+        public virtual AppUser Creator { get; set; } 
         public DateTime Started { get; set; }  
         public DateTime LastEdited { get; set; }  
         public DateTime Answered { get; set; }

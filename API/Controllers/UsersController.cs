@@ -51,7 +51,7 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<User>> Login(Login.Query query)
+        public async Task<ActionResult<UserDto>> Login(Login.Query query)
         {
             return await _mediator.Send(query);
         }

@@ -27,8 +27,8 @@ namespace Application.Users
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
-            private readonly UserManager<User> _userManager;
-            public Handler(DataContext context, UserManager<User> userManager)
+            private readonly UserManager<AppUser> _userManager;
+            public Handler(DataContext context, UserManager<AppUser> userManager)
             {
                 this._context = context;
                 this._userManager = userManager;
@@ -37,7 +37,7 @@ namespace Application.Users
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
 
-                var user = new User
+                var user = new AppUser
                 {
                     Id = request.Id,
                     UserName = request.UserName,

@@ -34,7 +34,7 @@ namespace Application.Questionnaires
                     var answered = new UserAnswer
                     {
                         Answer = dbAnswer,
-                        User = user,
+                        AppUser = user,
                         AnswerDate = DateTime.Now
                     };
                     _context.UserAnswers.Remove(answered);

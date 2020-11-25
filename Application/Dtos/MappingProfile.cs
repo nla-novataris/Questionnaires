@@ -13,7 +13,7 @@ namespace Application.Dtos
 
             CreateMap<UserAnswer, UserAnswerDto>();
 
-            CreateMap<User, UserDto>();
+            CreateMap<AppUser, UserDto>();
 
             CreateMap<Questionnaire, QuestionnaireDto>()
               .ForMember(d => d.Creator, o => o.MapFrom(s => s.Creator)

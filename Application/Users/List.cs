@@ -28,7 +28,7 @@ namespace Application.Users
             public async Task<List<UserDto>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var users = await _context.Users.ToListAsync();
-                var usersToReturn = _mapper.Map<List<User>, List<UserDto>>(users);
+                var usersToReturn = _mapper.Map<List<AppUser>, List<UserDto>>(users);
 
                 return usersToReturn;
             }

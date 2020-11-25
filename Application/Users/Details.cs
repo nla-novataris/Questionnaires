@@ -35,7 +35,7 @@ namespace Application.Users
                     throw new Exception("Could not find user");
                 }
 
-                return _mapper.Map<User, UserDto>(user); ;
+                return _mapper.Map<AppUser, UserDto>(user); ;
             }
         }
     }

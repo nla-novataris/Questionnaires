@@ -44,10 +44,10 @@ namespace API
             services.AddAutoMapper(typeof(List.Handler));
             services.AddControllers();
 
-            var builder = services.AddIdentityCore<User>();
+            var builder = services.AddIdentityCore<AppUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DataContext>();
-            identityBuilder.AddSignInManager<SignInManager<User>>();
+            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
             services.AddAuthentication();
         }

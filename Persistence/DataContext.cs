@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Persistence
 {
     
-    public class DataContext : IdentityDbContext<User>
+    public class DataContext : IdentityDbContext<AppUser>
     {
         public DataContext(DbContextOptions options) : base(options)
         {
@@ -13,7 +13,7 @@ namespace Persistence
 
         public DbSet<Activity> Activities { get; set; }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<AppUser> Users { get; set; }
         public DbSet<Questionnaire> Questionnaires { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
@@ -45,7 +45,7 @@ namespace Persistence
                 new { qa.UserId, qa.AnswerId }));
 
             builder.Entity<UserAnswer>()
-                .HasOne(q => q.User)
+                .HasOne(q => q.AppUser)
                 .WithMany(qa => qa.UserAnswers)
                 .HasForeignKey(q => q.UserId);
 

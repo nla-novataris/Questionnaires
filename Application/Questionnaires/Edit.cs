@@ -16,7 +16,7 @@ namespace Application.Questionnaires
             public string Title { get; set; }
             public string Description { get; set; }
             public int? Target { get; set; }
-            public User Creator { get; set; }
+            public AppUser Creator { get; set; }
             public DateTime? Date { get; set; }
             public ICollection<Question> Questions { get; set; }
         }

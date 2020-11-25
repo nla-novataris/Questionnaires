@@ -10,9 +10,9 @@ namespace Persistence
 {
     public class Seed
     {
-        public static async Task SeedData(DataContext context, UserManager<User> userManager)
+        public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
         {
-            var users = new List<User>();
+            var users = new List<AppUser>();
             var questionnaires = new List<Questionnaire>();
             var questions = new List<Question>();
             var answers1 = new List<Answer>();
@@ -43,7 +43,7 @@ namespace Persistence
             if (!userManager.Users.Any())
             {
                 users.Add(
-                    new User
+                    new AppUser
                     {
                         Id = "00001",
                         Email = "karl@gmail.com",
@@ -53,7 +53,7 @@ namespace Persistence
                         IsAdmin = true,
                     });
                 users.Add(
-                    new User
+                    new AppUser
                     {
                         Id = "00002",
                         FirstName = "Karl 2",
@@ -134,7 +134,7 @@ namespace Persistence
             userAnswers.Add(
                 new UserAnswer
                 {
-                    User = users[0],
+                    AppUser = users[0],
                     UserId = users[0].Id,
                     Answer = answers1[0],
                     AnswerId = answers1[0].Id,
@@ -143,7 +143,7 @@ namespace Persistence
 
             userAnswers.Add(new UserAnswer
             {
-                User = users[1],
+                AppUser = users[1],
                 UserId = users[1].Id,
                 Answer = answers1[1],
                 AnswerId = answers1[1].Id,

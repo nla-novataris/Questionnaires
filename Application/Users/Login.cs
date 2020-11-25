@@ -1,5 +1,8 @@
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Http;
+using Application.Dtos;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -9,7 +12,7 @@ namespace Application.Users
 {
     public class Login
     {
-        public class Query : IRequest<User>
+        public class Query : IRequest<UserDto>
         {
             public string UserName {get; set;}
             public string Password { get; set; }
@@ -24,24 +27,26 @@ namespace Application.Users
             }
         }
 
-        public class Handler : IRequestHandler<Query, User>
+        public class Handler : IRequestHandler<Query, UserDto>
         {
-            private readonly UserManager<User> _userManager;
-            private readonly SignInManager<User> _signInManager;
+            private readonly UserManager<AppUser> _userManager;
+            private readonly SignInManager<AppUser> _signInManager;
 
-            public Handler(UserManager<User> userManager, SignInManager<User> signInManager)
+            public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
             {
                 _userManager = userManager;
                 _signInManager = signInManager;
             }
 
-            public async Task<User> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<UserDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 var user = await _userManager.FindByNameAsync(request.UserName);
 
                 if (user == null)
                 {
                     //throw error
+                    //hrow new RestException(HttpStatusCode.Unauthorized.ToString());
+                    throw new HttpResponseException(HttpStatusCode.Unauthorized);
                 }
 
                 var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
@@ -49,11 +54,20 @@ namespace Application.Users
                 if (result.Succeeded)
                 {
                     //TODO: Generate token
-                    return user;
+                    return new UserDto()
+                    {
+                        Id = user.Id, //bør måske fjernes
+                        UserName = user.UserName,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Added = user.Added,
+                        Token = "This will be a token"
+                    };
                 }
                 
                 //throw exception
-                return null;
+                //throw new RestException(HttpStatusCode.Unauthorized.ToString());
+                throw new HttpResponseException(HttpStatusCode.Unauthorized);
             }
         }
     }
