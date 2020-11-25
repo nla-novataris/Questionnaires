@@ -1,4 +1,5 @@
 using System;
+using Application.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +12,7 @@ using Persistence;
 using AutoMapper;
 using Application.Questionnaires;
 using Domain;
+using Infrastructure.Security;
 
 namespace API
 {
@@ -49,6 +51,8 @@ namespace API
             identityBuilder.AddEntityFrameworkStores<DataContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
+            
             services.AddAuthentication();
         }
 
