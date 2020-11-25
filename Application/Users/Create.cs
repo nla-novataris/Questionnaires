@@ -20,6 +20,8 @@ namespace Application.Users
             public DateTime Added { get; set; }
             
             public string Email { get; set; }
+            
+            public string Password { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -48,7 +50,7 @@ namespace Application.Users
                     NormalizedUserName = request.UserName.ToUpper()
                 };
                 
-                await _userManager.CreateAsync(user, "Pa$$w0rd");
+                await _userManager.CreateAsync(user, request.Password);
                 //_context.Users.Add(user);
 
                 /*
