@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using Application.Interfaces;
 using Domain;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
@@ -12,7 +14,14 @@ namespace Infrastructure.Security
 {
     public class JwtGenerator : IJwtGenerator
     {
-        public string CreateToken(AppUser user)
+        readonly UserManager<AppUser> _userManager;
+
+        public JwtGenerator(UserManager<AppUser> userManager)
+        {
+            _userManager = userManager;
+        }
+        
+        public async Task<string> CreateToken(AppUser user)
         {
             var claims = new List<Claim>
             {
@@ -39,7 +48,7 @@ namespace Infrastructure.Security
             return tokenHandler.WriteToken(token);
         }
         
-        private void AddRolesToClaims(List<Claim> claims, IEnumerable<string> roles)
+        private void AddRolesToClaims(List<Claim> claims, IList<string> roles)
         {
             foreach (var role in roles)
             {

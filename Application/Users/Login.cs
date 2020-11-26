@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,19 +59,9 @@ namespace Application.Users
 
                 if (result.Succeeded)
                 {
-                    /*
-                    return new UserDto()
-                    {
-                        Id = user.Id, //bør måske fjernes
-                        UserName = user.UserName,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Added = user.Added,
-                        Token = _jwtGenerator.CreateToken(user)
-                    };
-                    */
+                    
                     var userToReturn = _mapper.Map<AppUser, UserDto>(user);
-                    userToReturn.Token = _jwtGenerator.CreateToken(user);
+                    userToReturn.Token = await _jwtGenerator.CreateToken(user);
                     return userToReturn;
                 }
                 
