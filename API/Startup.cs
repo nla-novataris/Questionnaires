@@ -61,16 +61,7 @@ namespace API
             services.AddAutoMapper(typeof(List.Handler));
             services.AddControllers();
 
-            /*
-            var builder = services.AddIdentityCore<AppUser>();
-            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
-            identityBuilder.AddEntityFrameworkStores<DataContext>();
-            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
-            //identityBuilder.AddRoles<IdentityRole>();
-            //identityBuilder.AddRoleManager<RoleManager<IdentityRole>>();
-            */
-            
-            var builder = services.AddIdentity<AppUser, IdentityRole>(cfg =>
+            services.AddIdentity<AppUser, IdentityRole>(cfg =>
                 {
                     cfg.Password.RequireNonAlphanumeric = false;
                     cfg.SignIn.RequireConfirmedEmail = false;
@@ -83,17 +74,7 @@ namespace API
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super duper hemmelig kode"));
-            /*
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(opt =>
-                    opt.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = key,
-                        ValidateAudience = false, //kan måske ændres senere
-                        ValidateIssuer = false //kan måske ændres senere
-                    });
-            */
+       
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -108,7 +89,6 @@ namespace API
                         ValidateIssuer = false //kan måske ændres senere
                     });
             
-            //måske authorization her
             services.AddAuthorization(opt =>
             {
                 opt.AddPolicy("RequireAdminOnly", policy => policy.RequireRole("Admin"));
