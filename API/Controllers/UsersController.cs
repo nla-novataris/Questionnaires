@@ -27,6 +27,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "RequireAdminOnly")]
         public async Task<ActionResult<UserDto>> Details(string id)
         {
             return await _mediator.Send(new Details.Query { Id = id });
@@ -46,7 +47,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<ActionResult<Unit>> Delete(string id)
         {
             return await _mediator.Send(new Delete.Command { Id = id });

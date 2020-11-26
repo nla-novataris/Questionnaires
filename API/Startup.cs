@@ -52,24 +52,38 @@ namespace API
             services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddMvc(opt =>
                 {
-                    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-                    opt.Filters.Add(new AuthorizeFilter(policy));
+                    var authenticatedPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build(); //Denne sørger for, at ALLE endpoints som udgangspunkt kræver authorization, med mindre andet er specificeret.
+                    opt.Filters.Add(new AuthorizeFilter(authenticatedPolicy));
                 })
                 .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-
             services.AddAutoMapper(typeof(List.Handler));
             services.AddControllers();
 
+            /*
             var builder = services.AddIdentityCore<AppUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DataContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+            //identityBuilder.AddRoles<IdentityRole>();
+            //identityBuilder.AddRoleManager<RoleManager<IdentityRole>>();
+            */
+            
+            var builder = services.AddIdentity<AppUser, IdentityRole>(cfg =>
+                {
+                    cfg.Password.RequireNonAlphanumeric = false;
+                    cfg.SignIn.RequireConfirmedEmail = false;
+                })
+                .AddRoles<IdentityRole>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<DataContext>();
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super duper hemmelig kode"));
+            /*
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
                     opt.TokenValidationParameters = new TokenValidationParameters()
@@ -79,6 +93,26 @@ namespace API
                         ValidateAudience = false, //kan måske ændres senere
                         ValidateIssuer = false //kan måske ændres senere
                     });
+            */
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(opt =>
+                    opt.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = key,
+                        ValidateAudience = false, //kan måske ændres senere
+                        ValidateIssuer = false //kan måske ændres senere
+                    });
+            
+            //måske authorization her
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("RequireAdminOnly", policy => policy.RequireRole("Admin"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

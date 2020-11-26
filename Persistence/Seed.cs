@@ -10,7 +10,7 @@ namespace Persistence
 {
     public class Seed
     {
-        public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
+        public static async Task SeedData(DataContext context, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             var users = new List<AppUser>();
             var questionnaires = new List<Questionnaire>();
@@ -18,26 +18,30 @@ namespace Persistence
             var answers1 = new List<Answer>();
             var answers2 = new List<Answer>();
             var userAnswers = new List<UserAnswer>();
+            
+            
+            //Her laver vi Admin role
+            //userManager.GetUserAsync()
+            var adminuser = userManager.Users.FirstOrDefault(u => u.Id == "db45c35f-a326-469f-b6ea-414d6e8e8c6d");
+
+            var result = await roleManager.RoleExistsAsync("Admin");
+            if (!result)
+            {
+                var role = new IdentityRole();
+                role.Name = "Admin";
+                await roleManager.CreateAsync(role);
+            }
 
             /*
-            users.Add(
-                new User
-                {
-                    Id = "00001",
-                    FirstName = "Karl",
-                    LastName = "Ost",
-                    UserName = "Karlo",
-                    IsAdmin = true,
-                });
-            users.Add(
-                   new User
-                   {
-                       Id = "00002",
-                       FirstName = "Karl 2",
-                       LastName = "Ost 2",
-                       UserName = "Karlo 2",
-                       IsAdmin = true,
-                   });
+            //Uncomment to create admin user for Nicolai Wulff
+            var admin1 = new AppUser
+            {
+                UserName = "wulffadmin",
+                FirstName = "Nicolai",
+                LastName = "Wulff"
+            };
+            await userManager.CreateAsync(admin1, "wulffPa$$w0rd");
+            await userManager.AddToRoleAsync(admin1, "Admin");
             */
 
             if (!userManager.Users.Any())

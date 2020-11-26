@@ -19,6 +19,9 @@ namespace Infrastructure.Security
                 new Claim(JwtRegisteredClaimNames.NameId, user.UserName)
             };
             
+            var roles = await _userManager.GetRolesAsync(user);
+            AddRolesToClaims(claims, roles);
+            
             //Generér signing credentials
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super duper hemmelig kode"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
@@ -34,6 +37,15 @@ namespace Infrastructure.Security
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+        
+        private void AddRolesToClaims(List<Claim> claims, IEnumerable<string> roles)
+        {
+            foreach (var role in roles)
+            {
+                var roleClaim = new Claim(ClaimTypes.Role, role);
+                claims.Add(roleClaim);
+            }
         }
     }
 }
