@@ -19,11 +19,9 @@ namespace Persistence
             var answers2 = new List<Answer>();
             var userAnswers = new List<UserAnswer>();
             
-            
-            //Her laver vi Admin role
-            //userManager.GetUserAsync()
-            var adminuser = userManager.Users.FirstOrDefault(u => u.Id == "db45c35f-a326-469f-b6ea-414d6e8e8c6d");
+            //var adminuser = userManager.Users.FirstOrDefault(u => u.Id == "db45c35f-a326-469f-b6ea-414d6e8e8c6d");
 
+            //Her laver vi Admin role
             var result = await roleManager.RoleExistsAsync("Admin");
             if (!result)
             {
