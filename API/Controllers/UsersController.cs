@@ -53,6 +53,7 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<ActionResult<UserDto>> Login(Login.Query query)
         {
             return await _mediator.Send(query);

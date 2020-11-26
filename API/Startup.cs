@@ -13,8 +13,12 @@ using Persistence;
 using AutoMapper;
 using Application.Questionnaires;
 using Domain;
+using FluentValidation.AspNetCore;
 using Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API
@@ -46,9 +50,15 @@ namespace API
             });
 
             services.AddMediatR(typeof(List.Handler).Assembly);
-            
-            
-            
+            services.AddMvc(opt =>
+                {
+                    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                    opt.Filters.Add(new AuthorizeFilter(policy));
+                })
+                .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>())
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+
             services.AddAutoMapper(typeof(List.Handler));
             services.AddControllers();
 
