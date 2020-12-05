@@ -8,7 +8,6 @@ namespace Application.Dtos
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public bool? IsAdmin { get; set; }
         //public List<QuestionnaireDto> Questionnaires { get; set; } = new List<QuestionnaireDto>();
         public DateTime Added { get; set; }
         public string Token { get; set; }

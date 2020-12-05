@@ -4,7 +4,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Application.Users;
 using Application.Dtos;
-using Domain;
 using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
