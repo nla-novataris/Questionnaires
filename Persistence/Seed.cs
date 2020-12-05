@@ -29,8 +29,7 @@ namespace Persistence
                 role.Name = "Admin";
                 await roleManager.CreateAsync(role);
             }
-
-            /*
+            
             //Uncomment to create admin user for Nicolai Wulff
             var admin1 = new AppUser
             {
@@ -40,7 +39,6 @@ namespace Persistence
             };
             await userManager.CreateAsync(admin1, "wulffPa$$w0rd");
             await userManager.AddToRoleAsync(admin1, "Admin");
-            */
 
             if (!userManager.Users.Any())
             {
@@ -52,7 +50,6 @@ namespace Persistence
                         FirstName = "Karlsmart",
                         LastName = "Ost",
                         UserName = "Karlo",
-                        IsAdmin = true,
                     });
                 users.Add(
                     new AppUser
@@ -61,7 +58,6 @@ namespace Persistence
                         FirstName = "Karl 2",
                         LastName = "Ost 2",
                         UserName = "Karlo 2",
-                        IsAdmin = true,
                     });
                 foreach (var user in users)
                 {
