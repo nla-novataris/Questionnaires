@@ -18,7 +18,7 @@ namespace Persistence
             var answers2 = new List<Answer>();
             var answers3 = new List<Answer>();
             var userAnswers = new List<UserAnswer>();
-            
+
             //var adminuser = userManager.Users.FirstOrDefault(u => u.Id == "db45c35f-a326-469f-b6ea-414d6e8e8c6d");
 
             //Her laver vi Admin role
@@ -29,10 +29,11 @@ namespace Persistence
                 role.Name = "Admin";
                 await roleManager.CreateAsync(role);
             }
+            AppUser admin1 = null;
 
             if (!userManager.Users.Any())
             {
-                var admin1 = new AppUser
+                admin1 = new AppUser
                 {
                     UserName = "wulffadmin",
                     FirstName = "Nicolai",
@@ -40,11 +41,11 @@ namespace Persistence
                 };
                 await userManager.CreateAsync(admin1, "wulffPa$$w0rd");
                 await userManager.AddToRoleAsync(admin1, "Admin");
-                
+
                 users.Add(
                     new AppUser
                     {
-                        Id = "1",
+                        Id = Guid.NewGuid().ToString(),
                         Email = "karl@gmail.com",
                         FirstName = "Karlsmart",
                         LastName = "Ost",
@@ -53,7 +54,8 @@ namespace Persistence
                 users.Add(
                     new AppUser
                     {
-                        Id = "2",
+                        Id = Guid.NewGuid().ToString(),
+                        Email = "karl2@gmail.com",
                         FirstName = "Karlen",
                         LastName = "Ostensen",
                         UserName = "Karlo2",
@@ -127,51 +129,83 @@ namespace Persistence
                  Category = "Food",
                  Answers = answers3
              });
-            questionnaires.Add(
-             new Questionnaire
-             {
-                 Id = "0001",
-                 Title = "First questionnaire",
-                 Description = "An enquiry into users favorite pets",
-                 Target = 17,
-                 Creator = users[0],
-                 Questions = questions,
-                 Started = DateTime.Now,
-             });
-
-            userAnswers.Add(
-                new UserAnswer
-                {
-                    AppUser = users[0],
-                    UserId = users[0].Id,
-                    Answer = answers1[0],
-                    AnswerId = answers1[0].Id,
-                    AnswerDate = DateTime.Now
-                });
-
-            userAnswers.Add(new UserAnswer
-            {
-                AppUser = users[1],
-                UserId = users[1].Id,
-                Answer = answers1[1],
-                AnswerId = answers1[1].Id,
-                AnswerDate = DateTime.Now
-            });
-
-            if (!context.Users.Any())
-            {
-                context.Users.AddRange(users);
-                context.SaveChanges();
-            }
 
             if (!context.Questionnaires.Any())
             {
+                questionnaires.Add(
+                 new Questionnaire
+                 {
+                     Id = "0001",
+                     Title = "First questionnaire",
+                     Description = "An enquiry into users favorite pets",
+                     Target = 17,
+                     Creator = admin1,
+                     Questions = questions,
+                     Started = DateTime.Now,
+                 });
                 context.Questionnaires.AddRange(questionnaires);
                 context.SaveChanges();
             }
 
             if (!context.UserAnswers.Any())
             {
+
+                userAnswers.Add(
+                    new UserAnswer
+                    {
+                        AppUser = users[0],
+                        UserId = users[0].Id,
+                        Answer = answers1[0],
+                        AnswerId = answers1[0].Id,
+                        AnswerDate = DateTime.Now
+                    });
+
+                userAnswers.Add(
+                    new UserAnswer
+                    {
+                        AppUser = users[0],
+                        UserId = users[0].Id,
+                        Answer = answers2[1],
+                        AnswerId = answers2[1].Id,
+                        AnswerDate = DateTime.Now
+                    });
+                userAnswers.Add(
+                    new UserAnswer
+                    {
+                        AppUser = users[0],
+                        UserId = users[0].Id,
+                        Answer = answers3[1],
+                        AnswerId = answers3[1].Id,
+                        AnswerDate = DateTime.Now
+                    });
+                userAnswers.Add(
+                    new UserAnswer
+                    {
+                        AppUser = users[1],
+                        UserId = users[1].Id,
+                        Answer = answers1[1],
+                        AnswerId = answers1[1].Id,
+                        AnswerDate = DateTime.Now
+                    });
+                userAnswers.Add(
+                new UserAnswer
+                {
+                    AppUser = users[1],
+                    UserId = users[1].Id,
+                    Answer = answers2[1],
+                    AnswerId = answers2[1].Id,
+                    AnswerDate = DateTime.Now
+                });
+                userAnswers.Add(
+                new UserAnswer
+                {
+                    AppUser = users[1],
+                    UserId = users[1].Id,
+                    Answer = answers3[1],
+                    AnswerId = answers3[1].Id,
+                    AnswerDate = DateTime.Now
+                });
+                  
                 context.UserAnswers.AddRange(userAnswers);
                 context.SaveChanges();
             }
