@@ -11,14 +11,11 @@ namespace Persistence
         {
         }
 
-        public DbSet<Activity> Activities { get; set; }
-
-        public DbSet<AppUser> Users { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Questionnaire> Questionnaires { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<UserAnswer> UserAnswers { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

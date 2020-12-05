@@ -15,18 +15,18 @@ namespace API.Controllers
         private readonly IMediator _mediator;
         public UsersController(IMediator mediator)
         {
-            this._mediator = mediator;
+            _mediator = mediator;
         }
 
         // GET api/users
         [HttpGet]
+        [Authorize(Policy = "RequireAdminOnly")]
         public async Task<ActionResult<List<UserDto>>> List()
         {
             return await _mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = "RequireAdminOnly")]
         public async Task<ActionResult<UserDto>> Details(string id)
         {
             return await _mediator.Send(new Details.Query { Id = id });
@@ -46,7 +46,6 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [AllowAnonymous]
         public async Task<ActionResult<Unit>> Delete(string id)
         {
             return await _mediator.Send(new Delete.Command { Id = id });

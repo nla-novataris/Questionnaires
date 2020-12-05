@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Domain;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +16,7 @@ namespace Persistence
             var questions = new List<Question>();
             var answers1 = new List<Answer>();
             var answers2 = new List<Answer>();
+            var answers3 = new List<Answer>();
             var userAnswers = new List<UserAnswer>();
             
             //var adminuser = userManager.Users.FirstOrDefault(u => u.Id == "db45c35f-a326-469f-b6ea-414d6e8e8c6d");
@@ -44,7 +44,7 @@ namespace Persistence
                 users.Add(
                     new AppUser
                     {
-                        Id = "00001",
+                        Id = "1",
                         Email = "karl@gmail.com",
                         FirstName = "Karlsmart",
                         LastName = "Ost",
@@ -53,10 +53,10 @@ namespace Persistence
                 users.Add(
                     new AppUser
                     {
-                        Id = "00002",
-                        FirstName = "Karl 2",
-                        LastName = "Ost 2",
-                        UserName = "Karlo 2",
+                        Id = "2",
+                        FirstName = "Karlen",
+                        LastName = "Ostensen",
+                        UserName = "Karlo2",
                     });
                 foreach (var user in users)
                 {
@@ -87,11 +87,26 @@ namespace Persistence
                  {
                      Description = "No",
                  });
+            answers3.Add(
+              new Answer
+              {
+                  Description = "Water",
+              });
+            answers3.Add(
+                 new Answer
+                 {
+                     Description = "Air",
+                 });
+            answers3.Add(
+                new Answer
+                {
+                    Description = "Earth",
+                });
 
             questions.Add(
                  new Question
                  {
-                     Title = "Second question",
+                     Title = "Cat question",
                      Description = "Do you like cats",
                      Category = "Pets",
                      Answers = answers1
@@ -99,34 +114,30 @@ namespace Persistence
             questions.Add(
                new Question
                {
-                   Title = "First question",
+                   Title = "Fish question",
                    Description = "Do you like fish",
                    Category = "Food",
                    Answers = answers2
                });
+            questions.Add(
+             new Question
+             {
+                 Title = "General question",
+                 Description = "In which element does your favorite pet resides?",
+                 Category = "Food",
+                 Answers = answers3
+             });
             questionnaires.Add(
              new Questionnaire
              {
                  Id = "0001",
                  Title = "First questionnaire",
-                 Description = "An enquiry into the nature of questionnaires",
+                 Description = "An enquiry into users favorite pets",
                  Target = 17,
                  Creator = users[0],
                  Questions = questions,
                  Started = DateTime.Now,
              });
-
-            questionnaires.Add(
-                 new Questionnaire
-                 {
-                     Id = "0002",
-                     Title = "Second questionnaire",
-                     Description = "A second enquiry into the nature of questionnaires",
-                     Target = 37,
-                     Creator = users[1],
-                     Questions = questions,
-                     Started = DateTime.Now,
-                 });
 
             userAnswers.Add(
                 new UserAnswer

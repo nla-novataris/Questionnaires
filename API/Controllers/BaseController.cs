@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Persistence;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -13,11 +14,12 @@ namespace API.Controllers
             _context = context;
         }
 
-        // GET /
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Get()
         {
-            var hello = "hello 1";
+            var hello = "Welcome. To use the api log in at \"/api/Users/login\" and make requests to \"/api/Questionnaires\" \n " +
+                "Have a nice day!";
             return Ok(hello);
         }
     }
