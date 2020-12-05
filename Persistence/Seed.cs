@@ -29,19 +29,18 @@ namespace Persistence
                 role.Name = "Admin";
                 await roleManager.CreateAsync(role);
             }
-            
-            //Uncomment to create admin user for Nicolai Wulff
-            var admin1 = new AppUser
-            {
-                UserName = "wulffadmin",
-                FirstName = "Nicolai",
-                LastName = "Wulff"
-            };
-            await userManager.CreateAsync(admin1, "wulffPa$$w0rd");
-            await userManager.AddToRoleAsync(admin1, "Admin");
 
             if (!userManager.Users.Any())
             {
+                var admin1 = new AppUser
+                {
+                    UserName = "wulffadmin",
+                    FirstName = "Nicolai",
+                    LastName = "Wulff"
+                };
+                await userManager.CreateAsync(admin1, "wulffPa$$w0rd");
+                await userManager.AddToRoleAsync(admin1, "Admin");
+                
                 users.Add(
                     new AppUser
                     {
