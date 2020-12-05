@@ -42,7 +42,6 @@ namespace Application.Users
                 user.UserName = request.UserName ?? user.UserName;
                 user.FirstName = request.FirstName ?? user.FirstName;
                 user.LastName = request.LastName ?? user.LastName;
-                user.IsAdmin = request.IsAdmin ?? user.IsAdmin;
 
                 if (request.Questionnaire != null)
                 {
