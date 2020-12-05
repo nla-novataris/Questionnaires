@@ -1,0 +1,414 @@
+{
+	"info": {
+		"_postman_id": "9251a67b-5148-47b7-8bb9-9a6808539976",
+		"name": "Questionnaires",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Questionnaires",
+			"item": [
+				{
+					"name": "Get Questionnaires",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJ3dWxmZmFkbWluIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjA3MTk4OTAyLCJleHAiOjE2MDcyODUzMDIsImlhdCI6MTYwNzE5ODkwMn0.tSjYc-D7eey1BStb5iwsQLxmCfGEScvmWr-I_Y2Rddqk0vVQwX-P5Kkr7yY6hVMwfm0kGwB1hyONiq1b-vDcSA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/questionnaires/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"questionnaires",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Questionnaires",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/questionnaires",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"questionnaires"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 17 Sep 2020 14:01:57 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "System.Text.Json.JsonException: A possible object cycle was detected which is not supported. This can either be due to a cycle or if the object depth is larger than the maximum allowed depth of 32.\r\n   at System.Text.Json.ThrowHelper.ThrowInvalidOperationException_SerializerCycleDetected(Int32 maxDepth)\r\n   at System.Text.Json.JsonSerializer.Write(Utf8JsonWriter writer, Int32 originalWriterDepth, Int32 flushThreshold, JsonSerializerOptions options, WriteStack& state)\r\n   at System.Text.Json.JsonSerializer.WriteAsyncCore(Stream utf8Json, Object value, Type inputType, JsonSerializerOptions options, CancellationToken cancellationToken)\r\n   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)\r\n   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|29_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()\r\n--- End of stack trace from previous location where exception was thrown ---\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|19_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)\r\n   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)\r\n   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)\r\n   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)\r\n   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)\r\n\r\nHEADERS\r\n=======\r\nConnection: keep-alive\r\nAccept: */*\r\nAccept-Encoding: gzip, deflate, br\r\nHost: localhost:5000\r\nUser-Agent: PostmanRuntime/7.26.5\r\nPostman-Token: b07d8dd5-d1f6-4402-9df3-b8f624e1439e\r\n"
+						}
+					]
+				},
+				{
+					"name": "Get Questionnaire",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJ3dWxmZmFkbWluIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjA3MTk4OTAyLCJleHAiOjE2MDcyODUzMDIsImlhdCI6MTYwNzE5ODkwMn0.tSjYc-D7eey1BStb5iwsQLxmCfGEScvmWr-I_Y2Rddqk0vVQwX-P5Kkr7yY6hVMwfm0kGwB1hyONiq1b-vDcSA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/questionnaires/0001",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"questionnaires",
+								"0001"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Questionnaire",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ba977a8f-bfd1-4a30-8327-8afa8281185e",
+								"exec": [
+									"var moment = require(\"moment\");\r",
+									"\r",
+									"pm.environment.set('activityDate', moment().add(14, 'days').toISOString());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJ3dWxmZmFkbWluIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjA3MTk4OTAyLCJleHAiOjE2MDcyODUzMDIsImlhdCI6MTYwNzE5ODkwMn0.tSjYc-D7eey1BStb5iwsQLxmCfGEScvmWr-I_Y2Rddqk0vVQwX-P5Kkr7yY6hVMwfm0kGwB1hyONiq1b-vDcSA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"0123\",\n\t\"title\": \"XXX\",\n\t\"description\": \"Description of the test questionnaire\",\n    \"target\": 1,\n    \"questions\": [{\n        \t\"id\": \"{{$guid}}\",\n\t        \"title\": \"Test Create question 1\",\n            \"description\": \"Description of the test question\"\n    }]\n}\n\n\n"
+						},
+						"url": {
+							"raw": "{{url}}/api/questionnaires/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"questionnaires",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Questionnaire new q",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "057ccf1d-4d03-4282-82b5-ea48935237d8",
+								"exec": [
+									"var moment = require(\"moment\");\r",
+									"\r",
+									"pm.environment.set('activityDate', moment().add(14, 'days').toISOString());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJ3dWxmZmFkbWluIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjA3MTk4OTAyLCJleHAiOjE2MDcyODUzMDIsImlhdCI6MTYwNzE5ODkwMn0.tSjYc-D7eey1BStb5iwsQLxmCfGEScvmWr-I_Y2Rddqk0vVQwX-P5Kkr7yY6hVMwfm0kGwB1hyONiq1b-vDcSA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Test Create Activity updated again 4\"\n    ,\n    \"questions\": [\n            {\n                \"id\":  \"{{$guid}}\",\n                \"title\": \"Second question\",\n                \"description\": \"Do you like goat cheese?\",\n                \"category\": \"Food\",\n                \"answers\": [\n                    {\n                        \"id\":  \"{{$guid}}\",\n                        \"description\": \"Yes\"\n                    },\n                    {\n                        \"id\":  \"{{$guid}}\",\n                        \"description\": \"No\"\n                    }\n                ]\n            },\n             {\n                \"id\":  \"{{$guid}}\",\n                \"title\": \"First question\",\n                \"description\": \"Do you like meatloaf?\",\n                \"category\": \"Food\",\n                \"answers\": [\n                    {\n                        \"id\":  \"{{$guid}}\",\n                        \"description\": \"Yes\"\n                    },\n                    {\n                        \"id\":  \"{{$guid}}\",\n                        \"description\": \"No\"\n                    }\n                ]\n            }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/questionnaires/0123",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"questionnaires",
+								"0123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Questionnaire",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e0b549b6-395f-4809-869a-51abcc1e77be",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJ3dWxmZmFkbWluIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjA3MTk4OTAyLCJleHAiOjE2MDcyODUzMDIsImlhdCI6MTYwNzE5ODkwMn0.tSjYc-D7eey1BStb5iwsQLxmCfGEScvmWr-I_Y2Rddqk0vVQwX-P5Kkr7yY6hVMwfm0kGwB1hyONiq1b-vDcSA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/questionnaires/0123",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"questionnaires",
+								"0123"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Login user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"wulfftest\",\n    \"password\": \"mitPa$$w0rd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/users/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						},
+						"description": "test login"
+					},
+					"response": []
+				},
+				{
+					"name": "Login Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"wulffadmin\",\n    \"password\": \"wulffPa$$w0rd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/users/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						},
+						"description": "test login"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users as Admin",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJ3dWxmZmFkbWluIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjA3MTc0ODY5LCJleHAiOjE2MDcyNjEyNjksImlhdCI6MTYwNzE3NDg2OX0.XCqOmR9cjv5ZyrF9RGPfSBgrVcdnXsxq-Wd72CnWu8zW4Z4BTUCXX-24UPR4z340xpnkGYBlO2UDY8IuwqR4lg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJ3dWxmZmFkbWluIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjA3MTk4OTAyLCJleHAiOjE2MDcyODUzMDIsImlhdCI6MTYwNzE5ODkwMn0.tSjYc-D7eey1BStb5iwsQLxmCfGEScvmWr-I_Y2Rddqk0vVQwX-P5Kkr7yY6hVMwfm0kGwB1hyONiq1b-vDcSA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/users/1db6b7d9-2b5c-401a-8224-d3bf4a699037",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1db6b7d9-2b5c-401a-8224-d3bf4a699037"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2d17a568-1aab-4924-9608-ee07f8cb1352",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "44593a72-3ad1-42f9-a843-b57dcab5ba04",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "88daf1e9-213d-40c5-805a-f43adb77ec79",
+			"key": "url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
